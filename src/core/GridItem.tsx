@@ -12,7 +12,19 @@ const GridItem = ({ children, to }: GridItemProps) => {
   return (
     <Grid.Col md={6} lg={4}>
       <Link to={to} style={{ textDecoration: "none" }}>
-        <Card withBorder radius="md" shadow="md" p={0}>
+        <Card
+          withBorder
+          radius="md"
+          shadow="md"
+          p={0}
+          sx={(theme) => ({
+            transition: "box-shadow 250ms ease, translate 250ms ease",
+            "&:hover": {
+              boxShadow: theme.shadows.xl,
+              translate: "0px -4px",
+            },
+          })}
+        >
           <Group noWrap align="flex-start" spacing={0}>
             {children}
           </Group>
@@ -47,11 +59,14 @@ type ContentProps = {
 
 const Content = ({ title, content }: ContentProps) => {
   return (
-    <Box p="md">
+    <Box p="md" w="100%">
       <Text fw={700} size="lg">
         {title}
       </Text>
-      <Text size="xs">{content}</Text>
+
+      <Text size="xs" lineClamp={2}>
+        {content}
+      </Text>
     </Box>
   );
 };

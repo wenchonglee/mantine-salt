@@ -12,7 +12,7 @@ export const Home = () => {
         </GridItem.Icon>
 
         <GridItem.Content
-          title="Collapsible Text"
+          title="Truncated Text"
           content="Render a 'show more' button when there line clamp is active"
         />
       </GridItem>
@@ -22,13 +22,13 @@ export const Home = () => {
           <IconAppWindow size={64} color="white" />
         </GridItem.Icon>
 
-        <GridItem.Content title="Tabs" content="Scrollable, single row tabs" />
+        <GridItem.Content title="Overflow Tabs" content="Scrollable, single row tabs" />
       </GridItem>
 
       <GridItem to={Routes.Home}>
         <GridItem.Icon
           // gradient={{ from: "green", to: "lime", deg: 45 }}
-          gradient={{ from: "gray", to: "black", deg: 45 }}
+          gradient={{ from: "gray", to: "gray", deg: 45 }}
         >
           <IconPhotoUp size={64} color="white" />
         </GridItem.Icon>
@@ -43,7 +43,7 @@ export const Home = () => {
       <GridItem to={Routes.Home}>
         <GridItem.Icon
           // gradient={{ from: "green", to: "lime", deg: 45 }}
-          gradient={{ from: "gray", to: "black", deg: 45 }}
+          gradient={{ from: "gray", to: "gray", deg: 45 }}
         >
           <IconTrees size={64} color="white" />
         </GridItem.Icon>
@@ -58,7 +58,7 @@ export const Home = () => {
       <GridItem to={Routes.Home}>
         <GridItem.Icon
           // gradient={{ from: "green", to: "lime", deg: 45 }}
-          gradient={{ from: "gray", to: "black", deg: 45 }}
+          gradient={{ from: "gray", to: "gray", deg: 45 }}
         >
           <IconTable size={64} color="white" />
         </GridItem.Icon>
