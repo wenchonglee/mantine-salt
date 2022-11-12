@@ -1,4 +1,4 @@
-import { Card, CSSObject, Stack, Tabs, Text } from "@mantine/core";
+import { Card, CSSObject, Flex, Stack, Tabs, Text } from "@mantine/core";
 import { DemoShell } from "../core";
 import { OverflowTabs } from "./OverflowTabs";
 
@@ -12,6 +12,13 @@ const dummyArray = new Array(10).fill(undefined);
 export const OverflowTabsDemo = () => {
   return (
     <Stack>
+      <Flex justify="flex-end">
+        <DemoShell.Source
+          componentLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/OverflowTabs/OverflowTabs.tsx"
+          demoLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/OverflowTabs/OverflowTabsDemo.tsx"
+        />
+      </Flex>
+
       <DemoShell
         header="Default"
         description="Has a resize observer to update TabsList overflow state. 

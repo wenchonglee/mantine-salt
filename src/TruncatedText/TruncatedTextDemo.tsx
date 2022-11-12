@@ -1,4 +1,4 @@
-import { Card, CSSObject, Stack } from "@mantine/core";
+import { Card, CSSObject, Flex, Stack } from "@mantine/core";
 import { DemoShell } from "../core";
 import { TruncatedText } from "./TruncatedText";
 
@@ -10,6 +10,13 @@ const cardStyles: CSSObject = {
 export const TruncatedTextDemo = () => {
   return (
     <Stack>
+      <Flex justify="flex-end">
+        <DemoShell.Source
+          componentLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/TruncatedText/TruncatedText.tsx"
+          demoLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/TruncatedText/TruncatedTextDemo.tsx"
+        />
+      </Flex>
+
       <DemoShell
         header="Default"
         description="Has a resize observer to update overflow state. Disconnects if 'Show more' is triggered"

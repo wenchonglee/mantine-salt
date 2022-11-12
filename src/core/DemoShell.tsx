@@ -1,4 +1,5 @@
-import { Card, Center, Divider, Space, Text } from "@mantine/core";
+import { Button, Card, Center, Divider, Space, Text } from "@mantine/core";
+import { IconBrandGithub } from "@tabler/icons";
 import { ReactNode } from "react";
 
 type DemoShellProps = {
@@ -7,7 +8,7 @@ type DemoShellProps = {
   children: ReactNode;
 };
 
-export const DemoShell = ({ children, description, header }: DemoShellProps) => {
+const DemoShell = ({ children, description, header }: DemoShellProps) => {
   return (
     <Card w="100%" withBorder>
       <Text fw={700}>{header}</Text>
@@ -27,3 +28,32 @@ export const DemoShell = ({ children, description, header }: DemoShellProps) => 
     </Card>
   );
 };
+
+type SourceProps = {
+  componentLink: string;
+  demoLink: string;
+};
+
+const Source = ({ componentLink, demoLink }: SourceProps) => {
+  return (
+    <Button.Group>
+      <Button leftIcon={<IconBrandGithub />} variant="gradient" component="a" href={componentLink} target="_blank">
+        Component source
+      </Button>
+      <Button
+        leftIcon={<IconBrandGithub />}
+        fullWidth={false}
+        variant="default"
+        component="a"
+        href={demoLink}
+        target="_blank"
+      >
+        Demo source
+      </Button>
+    </Button.Group>
+  );
+};
+
+DemoShell.Source = Source;
+
+export { DemoShell };
