@@ -13,6 +13,8 @@ import { useLocalStorage, useMediaQuery } from "@mantine/hooks";
 import { IconBrandGithub } from "@tabler/icons";
 import { Link, Outlet, ReactLocation, Route, Router } from "react-location";
 import { Home, Return, Routes, SegmentedToggle } from "./core";
+import { LightboxCarouselDemo } from "./LightboxCarousel";
+import { MantineAgGridDemo } from "./MantineAgGrid";
 import { OverflowTabsDemo } from "./OverflowTabs/OverflowTabsDemo";
 import { TruncatedTextDemo } from "./TruncatedText/TruncatedTextDemo";
 
@@ -30,6 +32,14 @@ const routes: Route[] = [
   {
     path: Routes.OverflowTabs,
     element: <OverflowTabsDemo />,
+  },
+  {
+    path: Routes.LightboxCarousel,
+    element: <LightboxCarouselDemo />,
+  },
+  {
+    path: Routes.MantineAgGrid,
+    element: <MantineAgGridDemo />,
   },
 ];
 

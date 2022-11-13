@@ -11,10 +11,7 @@ export const Home = () => {
           <IconRowInsertBottom size={64} color="white" />
         </GridItem.Icon>
 
-        <GridItem.Content
-          title="Truncated Text"
-          content="Render a 'show more' button when there line clamp is active"
-        />
+        <GridItem.Content title="Truncated Text" content="Render a 'show more' button when line clamp is active" />
       </GridItem>
 
       <GridItem to={Routes.OverflowTabs}>
@@ -25,18 +22,26 @@ export const Home = () => {
         <GridItem.Content title="Overflow Tabs" content="Scrollable, single row tabs" />
       </GridItem>
 
-      <GridItem to={Routes.Home}>
+      <GridItem to={Routes.LightboxCarousel}>
+        <GridItem.Icon gradient={{ from: "green", to: "lime", deg: 45 }}>
+          <IconPhotoUp size={64} color="white" />
+        </GridItem.Icon>
+
+        <GridItem.Content title="Lightbox Carousel" content="A @mantine/carousel with lightbox behavior" />
+      </GridItem>
+
+      <GridItem to={Routes.MantineAgGrid}>
         <GridItem.Icon
           // gradient={{ from: "green", to: "lime", deg: 45 }}
           gradient={{ from: "gray", to: "gray", deg: 45 }}
         >
-          <IconPhotoUp size={64} color="white" />
+          <IconTable size={64} color="white" />
         </GridItem.Icon>
 
         <GridItem.Content
-          title="Lightbox Carousel"
+          title="Ag-grid Themed Table"
+          // content="Tree select"
           content="Work in progress"
-          // content="A @mantine/carousel with lightbox behavior"
         />
       </GridItem>
 
@@ -50,21 +55,6 @@ export const Home = () => {
 
         <GridItem.Content
           title="Tree Dropdown"
-          // content="Tree select"
-          content="Work in progress"
-        />
-      </GridItem>
-
-      <GridItem to={Routes.Home}>
-        <GridItem.Icon
-          // gradient={{ from: "green", to: "lime", deg: 45 }}
-          gradient={{ from: "gray", to: "gray", deg: 45 }}
-        >
-          <IconTable size={64} color="white" />
-        </GridItem.Icon>
-
-        <GridItem.Content
-          title="Ag-grid Themed Table"
           // content="Tree select"
           content="Work in progress"
         />
