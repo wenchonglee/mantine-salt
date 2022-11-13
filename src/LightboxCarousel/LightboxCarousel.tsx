@@ -1,4 +1,4 @@
-import { Carousel, Embla } from "@mantine/carousel";
+import { Carousel, CarouselProps, Embla } from "@mantine/carousel";
 import {
   ActionIcon,
   AspectRatio,
@@ -12,12 +12,10 @@ import {
   Stack,
 } from "@mantine/core";
 import { IconX } from "@tabler/icons";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { LightboxImage } from "./LightboxImage";
 
-type SomeProps = {};
-
-const useStyles = createStyles((theme, {}: SomeProps) => ({
+const useStyles = createStyles((theme) => ({
   carouselControl: {
     "&[data-inactive]": {
       opacity: 0,
@@ -44,23 +42,15 @@ export const LightboxCarousel = (props: LightboxCarouselProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSrc, setSelectedSrc] = useState<string>();
 
-  const { classes } = useStyles({});
+  const { classes } = useStyles();
   const [embla, setEmbla] = useState<Embla | null>(null);
+  const [embla2, setEmbla2] = useState<Embla | null>(null);
   const isOverflowing = embla ? embla.slidesInView().length < imageSrc.length : true;
+  const isOverflowing2 = embla2 ? embla2.slidesInView().length < imageSrc.length : true;
 
-  const carousel = (
-    <Carousel
-      align="start"
-      classNames={{
-        control: classes.carouselControl,
-      }}
-      draggable={false}
-      getEmblaApi={setEmbla}
-      height="200"
-      slideGap="xs"
-      withControls={isOverflowing}
-    >
-      {imageSrc.map((src, index) => (
+  const carouselSlides = useMemo(
+    () =>
+      imageSrc.map((src, index) => (
         <Carousel.Slide size={200} key={index}>
           <AspectRatio ratio={1}>
             <Image
@@ -90,13 +80,25 @@ export const LightboxCarousel = (props: LightboxCarouselProps) => {
             />
           </AspectRatio>
         </Carousel.Slide>
-      ))}
-    </Carousel>
+      )),
+    [imageSrc]
   );
+
+  const commonCarouselProps: CarouselProps = {
+    align: "start",
+    classNames: {
+      control: classes.carouselControl,
+    },
+    draggable: false,
+    height: "200",
+    slideGap: "xs",
+  };
 
   return (
     <>
-      {carousel}
+      <Carousel {...commonCarouselProps} getEmblaApi={setEmbla} withControls={isOverflowing}>
+        {carouselSlides}
+      </Carousel>
 
       <Modal
         opened={isModalOpen}
@@ -115,7 +117,11 @@ export const LightboxCarousel = (props: LightboxCarouselProps) => {
             <LightboxImage src={selectedSrc} />
           </Box>
 
-          <Box m="md">{carousel}</Box>
+          <Box m="md">
+            <Carousel {...commonCarouselProps} getEmblaApi={setEmbla2} withControls={isOverflowing2}>
+              {carouselSlides}
+            </Carousel>
+          </Box>
         </Stack>
       </Modal>
     </>
