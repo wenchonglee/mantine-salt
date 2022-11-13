@@ -24,24 +24,11 @@ export const LightboxImage = (props: ImageProps) => {
 
   useLayoutEffect(() => {
     if (ref.current) {
-      console.log(
-        "natural w",
-        ref.current.naturalWidth,
-        "natural h",
-        ref.current.naturalHeight,
-        "--",
-        ref.current.width,
-        ref.current.offsetWidth,
-        ref.current.height,
-        ref.current.offsetHeight
-      );
-      if (
-        ref.current.naturalWidth <= ref.current.clientWidth &&
-        ref.current.naturalHeight <= ref.current.clientHeight
-      ) {
+      const { naturalWidth, naturalHeight, clientWidth, clientHeight } = ref.current;
+
+      if (naturalWidth <= clientWidth && naturalHeight <= clientHeight) {
         setImageSize("locked");
       } else {
-        console.log("!");
         setImageSize("contain");
       }
     }
@@ -61,9 +48,9 @@ export const LightboxImage = (props: ImageProps) => {
   };
 
   const imageProps: ImageProps =
-    imageSize === "contain"
+    imageSize === "contain" || imageSize === "locked"
       ? {
-          fit: "contain",
+          fit: imageSize === "locked" ? "none" : "contain",
           height: "calc(100vh - 400px)",
           width: "100%",
         }

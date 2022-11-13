@@ -18,6 +18,12 @@ import { LightboxImage } from "./LightboxImage";
 type SomeProps = {};
 
 const useStyles = createStyles((theme, {}: SomeProps) => ({
+  carouselControl: {
+    "&[data-inactive]": {
+      opacity: 0,
+      cursor: "default",
+    },
+  },
   closeButton: {
     position: "absolute",
     right: theme.spacing.sm,
@@ -39,24 +45,20 @@ export const LightboxCarousel = (props: LightboxCarouselProps) => {
   const [selectedSrc, setSelectedSrc] = useState<string>();
 
   const { classes } = useStyles({});
-
   const [embla, setEmbla] = useState<Embla | null>(null);
-  //! if viewport height is smaller than x, dont render carousel in modal
-  console.log(embla?.slidesInView());
+  const isOverflowing = embla ? embla.slidesInView().length < imageSrc.length : true;
 
   const carousel = (
     <Carousel
-      slideGap="xs"
-      height="200px"
-      getEmblaApi={setEmbla}
-      styles={{
-        control: {
-          "&[data-inactive]": {
-            opacity: 0,
-            cursor: "default",
-          },
-        },
+      align="start"
+      classNames={{
+        control: classes.carouselControl,
       }}
+      draggable={false}
+      getEmblaApi={setEmbla}
+      height="200"
+      slideGap="xs"
+      withControls={isOverflowing}
     >
       {imageSrc.map((src, index) => (
         <Carousel.Slide size={200} key={index}>
@@ -101,19 +103,14 @@ export const LightboxCarousel = (props: LightboxCarouselProps) => {
         onClose={() => setIsModalOpen(false)}
         size="80%"
         overlayBlur={1}
-        withCloseButton={false}
         trapFocus={false}
+        withCloseButton={false}
       >
         <ActionIcon variant="default" className={classes.closeButton} onClick={() => setIsModalOpen(false)}>
           <IconX />
         </ActionIcon>
 
-        <Stack
-          p={0}
-          sx={{
-            overflow: "hidden",
-          }}
-        >
+        <Stack p={0} sx={{ overflow: "hidden" }}>
           <Box pos="relative">
             <LightboxImage src={selectedSrc} />
           </Box>
