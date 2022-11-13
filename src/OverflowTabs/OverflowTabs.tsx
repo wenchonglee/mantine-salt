@@ -43,39 +43,31 @@ export const OverflowTabs = (props: OverflowTabsProps) => {
 
   const newChildren = useMemo(() => {
     return Children.map(children, (child) => {
-      if (isValidElement(child)) {
-        //@ts-ignore
-        if ("displayName" in child.type && child.type.displayName === "@mantine/core/TabsList") {
-          return (
-            <Group noWrap align="center">
-              {isOverflowing && (
-                <ActionIcon
-                  className={classes.leftButton}
-                  onClick={() => scroll("left")}
-                  size="xs"
-                  variant="transparent"
-                >
-                  <IconChevronLeft />
-                </ActionIcon>
-              )}
+      if (isValidElement(child) && child.type === Tabs.List) {
+        return (
+          <Group noWrap align="center">
+            {isOverflowing && (
+              <ActionIcon className={classes.leftButton} onClick={() => scroll("left")} size="xs" variant="transparent">
+                <IconChevronLeft />
+              </ActionIcon>
+            )}
 
-              <div className={classes.wrapper} ref={ref}>
-                {child}
-              </div>
+            <div className={classes.wrapper} ref={ref}>
+              {child}
+            </div>
 
-              {isOverflowing && (
-                <ActionIcon
-                  className={classes.rightButton}
-                  onClick={() => scroll("right")}
-                  size="xs"
-                  variant="transparent"
-                >
-                  <IconChevronRight />
-                </ActionIcon>
-              )}
-            </Group>
-          );
-        }
+            {isOverflowing && (
+              <ActionIcon
+                className={classes.rightButton}
+                onClick={() => scroll("right")}
+                size="xs"
+                variant="transparent"
+              >
+                <IconChevronRight />
+              </ActionIcon>
+            )}
+          </Group>
+        );
       }
       return child;
     });
