@@ -6,15 +6,16 @@ type SearchMultiSelectProps = {
   state: string[];
   setState: Dispatch<SetStateAction<string[]>>;
   search(query: string): Promise<SelectItem[]>;
+  defaultData?: SelectItem[];
 };
 
 export const SearchMultiSelect = (props: SearchMultiSelectProps) => {
-  const { state, setState, search } = props;
+  const { state, setState, search, defaultData = [] } = props;
   const [data, setData] = useState<SelectItem[]>([]);
   // const [searchValue, setSearchValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const [selectedData, setSelectedData] = useState<SelectItem[]>([]);
+  const [selectedData, setSelectedData] = useState<SelectItem[]>(defaultData);
 
   const fullData = [...data, ...selectedData];
 

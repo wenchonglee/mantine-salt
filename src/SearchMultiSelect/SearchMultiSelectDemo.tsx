@@ -4,7 +4,7 @@ import { DemoShell } from "../core";
 import { SearchMultiSelect } from "./SearchMultiSelect";
 
 export const SearchMultiSelectDemo = () => {
-  const [value, setValue] = useState<string[]>([]);
+  const [value, setValue] = useState<string[]>(["1"]);
   const [res, setRes] = useState<SelectItem[]>([]);
 
   const search = async (query: string) => {
@@ -46,7 +46,17 @@ export const SearchMultiSelectDemo = () => {
           <Code block>{JSON.stringify(res)}</Code>
 
           <Divider m="md" />
-          <SearchMultiSelect state={value} setState={setValue} search={search} />
+          <SearchMultiSelect
+            state={value}
+            setState={setValue}
+            search={search}
+            defaultData={[
+              {
+                value: "1",
+                label: "iphone 9",
+              },
+            ]}
+          />
         </Card>
       </DemoShell>
     </Stack>
