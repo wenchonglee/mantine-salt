@@ -4,4 +4,5 @@ export enum Routes {
   OverflowTabs = "/overflow-tabs",
   LightboxCarousel = "/lightbox-carousel",
   MantineAgGrid = "/mantine-ag-grid",
+  SearchMultiSelect = "/search-multi-select",
 }

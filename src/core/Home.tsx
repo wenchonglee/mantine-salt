@@ -1,5 +1,5 @@
 import { Grid } from "@mantine/core";
-import { IconAppWindow, IconPhotoUp, IconRowInsertBottom, IconTable, IconTrees } from "@tabler/icons";
+import { IconAppWindow, IconInputSearch, IconPhotoUp, IconRowInsertBottom, IconTable, IconTrees } from "@tabler/icons";
 import { GridItem } from "./GridItem";
 import { Routes } from "./routes";
 
@@ -55,6 +55,21 @@ export const Home = () => {
 
         <GridItem.Content
           title="Tree Dropdown"
+          // content="Tree select"
+          content="Work in progress"
+        />
+      </GridItem>
+
+      <GridItem to={Routes.SearchMultiSelect}>
+        <GridItem.Icon
+          // gradient={{ from: "green", to: "lime", deg: 45 }}
+          gradient={{ from: "gray", to: "gray", deg: 45 }}
+        >
+          <IconInputSearch size={64} color="white" />
+        </GridItem.Icon>
+
+        <GridItem.Content
+          title="Search MultiSelect"
           // content="Tree select"
           content="Work in progress"
         />

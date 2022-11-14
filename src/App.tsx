@@ -16,6 +16,7 @@ import { Home, Return, Routes, SegmentedToggle } from "./core";
 import { LightboxCarouselDemo } from "./LightboxCarousel";
 import { MantineAgGridDemo } from "./MantineAgGrid";
 import { OverflowTabsDemo } from "./OverflowTabs/OverflowTabsDemo";
+import { SearchMultiSelectDemo } from "./SearchMultiSelect";
 import { TruncatedTextDemo } from "./TruncatedText/TruncatedTextDemo";
 
 const location = new ReactLocation();
@@ -40,6 +41,10 @@ const routes: Route[] = [
   {
     path: Routes.MantineAgGrid,
     element: <MantineAgGridDemo />,
+  },
+  {
+    path: Routes.SearchMultiSelect,
+    element: <SearchMultiSelectDemo />,
   },
 ];
 
