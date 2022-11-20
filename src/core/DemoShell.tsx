@@ -86,7 +86,17 @@ const DemoHeader = ({ children }: { children: ReactNode }) => {
 
 const DemoContent = ({ children }: { children: ReactNode }) => {
   return (
-    <Stack maw="1200px" mx={"auto"} mb="xl">
+    <Stack
+      maw="1200px"
+      mx={"auto"}
+      mb="xl"
+      sx={(theme) => ({
+        [theme.fn.smallerThan(1550)]: {
+          marginRight: theme.spacing.xl,
+          marginLeft: theme.spacing.xl,
+        },
+      })}
+    >
       {children}
     </Stack>
   );

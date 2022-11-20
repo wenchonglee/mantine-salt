@@ -72,7 +72,7 @@ function App() {
             padding={0}
             navbarOffsetBreakpoint="sm"
             asideOffsetBreakpoint="sm"
-            navbar={<Navbar opened={opened} />}
+            navbar={<Navbar opened={opened} setOpened={setOpened} />}
             header={
               <Header height={50} p="md">
                 <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
@@ -86,11 +86,13 @@ function App() {
                     />
                   </MediaQuery>
 
-                  <Group position="apart" w="100%">
+                  <Group position="apart" w="100%" noWrap>
                     <UnstyledButton component={Link} to={Routes.Home}>
                       <Group>
                         <IconSalt />
-                        <Title size="h4">Mantine Salt</Title>
+                        <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
+                          <Title size="h4">Mantine Salt</Title>
+                        </MediaQuery>
                       </Group>
                     </UnstyledButton>
 

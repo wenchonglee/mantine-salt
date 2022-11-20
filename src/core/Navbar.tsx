@@ -75,9 +75,17 @@ interface LinksGroupProps {
   initiallyOpened?: boolean;
   links?: { label: string; link: string }[];
   link?: string;
+  setOpened(value: boolean): void;
 }
 
-export function LinksGroup({ icon: Icon, label, initiallyOpened, links, link }: LinksGroupProps) {
+export function LinksGroup({
+  icon: Icon,
+  label,
+  initiallyOpened,
+  links,
+  link,
+  setOpened: setNavbarOpened,
+}: LinksGroupProps) {
   const { classes, theme } = useLinksStyles();
   const hasLinks = Array.isArray(links);
   const [opened, setOpened] = useState(initiallyOpened || false);
@@ -87,10 +95,11 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links, link }: 
       key={link.label}
       to={link.link}
       style={{ textDecoration: "none" }}
-      getActiveProps={() => {
-        return {
-          className: classes.activeLink,
-        };
+      getActiveProps={() => ({
+        className: classes.activeLink,
+      })}
+      onClick={() => {
+        setNavbarOpened(false);
       }}
     >
       <Text className={classes.link}>{link.label}</Text>
@@ -182,9 +191,9 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export const Navbar = ({ opened }: { opened: boolean }) => {
+export const Navbar = ({ opened, setOpened }: { opened: boolean; setOpened(value: boolean): void }) => {
   const { classes } = useStyles();
-  const links = navs.map((item) => <LinksGroup {...item} key={item.label} />);
+  const links = navs.map((item) => <LinksGroup {...item} key={item.label} setOpened={setOpened} />);
 
   return (
     <MantineNavbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
