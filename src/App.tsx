@@ -16,6 +16,7 @@ import { Home, Return, Routes, SegmentedToggle } from "./core";
 import { LightboxCarouselDemo } from "./LightboxCarousel";
 import { MantineAgGridDemo } from "./MantineAgGrid";
 import { OverflowTabsDemo } from "./OverflowTabs/OverflowTabsDemo";
+import { OverflowTabs2Demo } from "./OverflowTabs2";
 import { SearchMultiSelectDemo } from "./SearchMultiSelect";
 import { TruncatedTextDemo } from "./TruncatedText/TruncatedTextDemo";
 
@@ -33,6 +34,10 @@ const routes: Route[] = [
   {
     path: Routes.OverflowTabs,
     element: <OverflowTabsDemo />,
+  },
+  {
+    path: Routes.OverflowTabs2,
+    element: <OverflowTabs2Demo />,
   },
   {
     path: Routes.LightboxCarousel,

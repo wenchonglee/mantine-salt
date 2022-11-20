@@ -1,4 +1,4 @@
-import { Loader, MultiSelect, SelectItem } from "@mantine/core";
+import { Loader, MultiSelect, MultiSelectProps, SelectItem } from "@mantine/core";
 import { debounce } from "lodash";
 import { Dispatch, SetStateAction, useState } from "react";
 
@@ -7,10 +7,10 @@ type SearchMultiSelectProps = {
   setState: Dispatch<SetStateAction<string[]>>;
   search(query: string): Promise<SelectItem[]>;
   defaultData?: SelectItem[];
-};
+} & Omit<MultiSelectProps, "data" | "filter">;
 
 export const SearchMultiSelect = (props: SearchMultiSelectProps) => {
-  const { state, setState, search, defaultData = [] } = props;
+  const { state, setState, search, defaultData = [], ...rest } = props;
   const [data, setData] = useState<SelectItem[]>([]);
   // const [searchValue, setSearchValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
@@ -53,6 +53,14 @@ export const SearchMultiSelect = (props: SearchMultiSelectProps) => {
       value={state}
       searchable
       rightSection={isLoading ? <Loader size={14} /> : null}
+      clearable
+      withinPortal
+      onCreate={(query) => {
+        const item = { value: query, label: query };
+        setSelectedData([...selectedData, item]);
+        return item;
+      }}
+      {...rest}
     />
   );
 };

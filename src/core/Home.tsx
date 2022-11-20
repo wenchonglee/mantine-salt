@@ -22,6 +22,14 @@ export const Home = () => {
         <GridItem.Content title="Overflow Tabs" content="Scrollable, single row tabs" />
       </GridItem>
 
+      <GridItem to={Routes.OverflowTabs2}>
+        <GridItem.Icon gradient={{ from: "green", to: "blue", deg: 45 }}>
+          <IconAppWindow size={64} color="white" />
+        </GridItem.Icon>
+
+        <GridItem.Content title="Overflow Tabs 2" content="Single row tabs with menu" />
+      </GridItem>
+
       <GridItem to={Routes.LightboxCarousel}>
         <GridItem.Icon gradient={{ from: "green", to: "lime", deg: 45 }}>
           <IconPhotoUp size={64} color="white" />

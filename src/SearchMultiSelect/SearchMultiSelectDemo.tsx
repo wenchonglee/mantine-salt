@@ -56,6 +56,13 @@ export const SearchMultiSelectDemo = () => {
                 label: "iphone 9",
               },
             ]}
+            creatable
+            getCreateLabel={(query) => `+ Create ${query}`}
+            // onCreate={(query) => {
+            //   const item = { value: query, label: query };
+            //   setData((current) => [...current, item]);
+            //   return item;
+            // }}
           />
         </Card>
       </DemoShell>

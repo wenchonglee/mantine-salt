@@ -22,7 +22,7 @@ export const OverflowTabsDemo = () => {
       <DemoShell
         header="Default"
         description="Has a resize observer to update TabsList overflow state. 
-        When overflown, left/right buttons are rendered (tabs can be also be scrolled by mouse wheel or swipe gesture"
+        When overflown, left/right buttons are rendered (tabs can be also be scrolled by mouse wheel or swipe gesture)"
       >
         <Card withBorder sx={cardStyles}>
           <OverflowTabs defaultValue="0">
