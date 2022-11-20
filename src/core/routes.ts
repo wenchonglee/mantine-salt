@@ -1,7 +1,7 @@
 export enum Routes {
   Home = "/",
   TruncatedText = "/truncated-text",
-  OverflowTabs = "/overflow-tabs",
+  ScrollableTabs = "/scrollable-tabs",
   OverflowTabs2 = "/overflow-tabs-2",
   LightboxCarousel = "/lightbox-carousel",
   MantineAgGrid = "/mantine-ag-grid",

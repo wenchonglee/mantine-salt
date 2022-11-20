@@ -1,61 +1,51 @@
 import {
   ActionIcon,
-  Anchor,
-  Center,
+  Alert,
+  AppShell,
+  Burger,
   ColorScheme,
   ColorSchemeProvider,
   Group,
+  Header,
   MantineProvider,
-  Stack,
+  MediaQuery,
   Title,
+  UnstyledButton,
 } from "@mantine/core";
-import { useLocalStorage, useMediaQuery } from "@mantine/hooks";
-import { IconBrandGithub } from "@tabler/icons";
+import { useLocalStorage } from "@mantine/hooks";
+import { IconBrandGithub, IconSalt } from "@tabler/icons";
+import { useState } from "react";
 import { Link, Outlet, ReactLocation, Route, Router } from "react-location";
-import { Home, Return, Routes, SegmentedToggle } from "./core";
+import { Home, Routes, SegmentedToggle } from "./core";
+import { Navbar } from "./core/Navbar";
 import { LightboxCarouselDemo } from "./LightboxCarousel";
 import { MantineAgGridDemo } from "./MantineAgGrid";
-import { OverflowTabsDemo } from "./OverflowTabs/OverflowTabsDemo";
-import { OverflowTabs2Demo } from "./OverflowTabs2";
+import { OverflowTabsDemo } from "./OverflowTabs";
+import { ScrollableTabsDemo } from "./ScrollableTabs/ScrollableTabsDemo";
 import { SearchMultiSelectDemo } from "./SearchMultiSelect";
 import { TruncatedTextDemo } from "./TruncatedText/TruncatedTextDemo";
 
 const location = new ReactLocation();
 
 const routes: Route[] = [
+  { path: Routes.Home, element: <Home /> },
+  { path: Routes.TruncatedText, element: <TruncatedTextDemo /> },
+  { path: Routes.ScrollableTabs, element: <ScrollableTabsDemo /> },
+  { path: Routes.OverflowTabs2, element: <OverflowTabsDemo /> },
+  { path: Routes.LightboxCarousel, element: <LightboxCarouselDemo /> },
+  { path: Routes.MantineAgGrid, element: <MantineAgGridDemo /> },
+  { path: Routes.SearchMultiSelect, element: <SearchMultiSelectDemo /> },
   {
-    path: Routes.Home,
-    element: <Home />,
-  },
-  {
-    path: Routes.TruncatedText,
-    element: <TruncatedTextDemo />,
-  },
-  {
-    path: Routes.OverflowTabs,
-    element: <OverflowTabsDemo />,
-  },
-  {
-    path: Routes.OverflowTabs2,
-    element: <OverflowTabs2Demo />,
-  },
-  {
-    path: Routes.LightboxCarousel,
-    element: <LightboxCarouselDemo />,
-  },
-  {
-    path: Routes.MantineAgGrid,
-    element: <MantineAgGridDemo />,
-  },
-  {
-    path: Routes.SearchMultiSelect,
-    element: <SearchMultiSelectDemo />,
+    path: "*",
+    element: (
+      <Alert color="yellow" title="Not found">
+        This page doesn't exist yet
+      </Alert>
+    ),
   },
 ];
 
 function App() {
-  const matches = useMediaQuery("(min-width: 800px)");
-
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: "color-scheme",
     defaultValue: "dark",
@@ -64,6 +54,8 @@ function App() {
 
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+
+  const [opened, setOpened] = useState(false);
 
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
@@ -76,60 +68,53 @@ function App() {
         }}
       >
         <Router routes={routes} location={location}>
-          <Center
-            mx="md"
-            sx={(theme) => ({
-              [theme.fn.smallerThan("md")]: {
-                marginBlock: theme.spacing.xs,
-              },
-              [theme.fn.largerThan("md")]: {
-                marginBlock: theme.spacing.xl,
-              },
-              transition: "margin ease 250ms",
-            })}
+          <AppShell
+            padding={0}
+            navbarOffsetBreakpoint="sm"
+            asideOffsetBreakpoint="sm"
+            navbar={<Navbar opened={opened} />}
+            header={
+              <Header height={50} p="md">
+                <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
+                  <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+                    <Burger
+                      opened={opened}
+                      onClick={() => setOpened((o) => !o)}
+                      size="sm"
+                      // color={theme.colors.gray[6]}
+                      mr="xl"
+                    />
+                  </MediaQuery>
+
+                  <Group position="apart" w="100%">
+                    <UnstyledButton component={Link} to={Routes.Home}>
+                      <Group>
+                        <IconSalt />
+                        <Title size="h4">Mantine Salt</Title>
+                      </Group>
+                    </UnstyledButton>
+
+                    <Group noWrap spacing="xs">
+                      <ActionIcon
+                        component="a"
+                        href="https://github.com/wenchonglee/mantine-salt"
+                        target="_blank"
+                        color="dark"
+                        radius="xl"
+                        size="xl"
+                        variant="transparent"
+                      >
+                        <IconBrandGithub />
+                      </ActionIcon>
+                      <SegmentedToggle />
+                    </Group>
+                  </Group>
+                </div>
+              </Header>
+            }
           >
-            <Stack
-              maw="1200px"
-              sx={(theme) => ({
-                [theme.fn.smallerThan("sm")]: {
-                  minWidth: "320px",
-                },
-                [theme.fn.largerThan("sm")]: {
-                  minWidth: "720px",
-                },
-                [theme.fn.largerThan("lg")]: {
-                  minWidth: "1120px",
-                },
-                transition: "min-width ease 250ms, max-width ease 250ms",
-              })}
-            >
-              <Group position="apart" noWrap>
-                <Group noWrap spacing="xs">
-                  <Anchor component={Link} to={Routes.Home}>
-                    <Title size={matches ? "h1" : "h3"}>Mantine Salt</Title>
-                  </Anchor>
-
-                  <ActionIcon
-                    component="a"
-                    href="https://github.com/wenchonglee/mantine-salt"
-                    target="_blank"
-                    color="dark"
-                    radius="xl"
-                    size="xl"
-                    variant="transparent"
-                  >
-                    <IconBrandGithub />
-                  </ActionIcon>
-                </Group>
-
-                <SegmentedToggle />
-              </Group>
-
-              <Return />
-
-              <Outlet />
-            </Stack>
-          </Center>
+            <Outlet />
+          </AppShell>
         </Router>
       </MantineProvider>
     </ColorSchemeProvider>

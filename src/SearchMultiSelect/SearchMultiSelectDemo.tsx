@@ -1,6 +1,6 @@
-import { Card, Code, Divider, Flex, SelectItem, Stack, Title } from "@mantine/core";
+import { Badge, Box, Card, Code, Divider, Group, SelectItem, Text, Title } from "@mantine/core";
 import { useState } from "react";
-import { DemoShell } from "../core";
+import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
 import { SearchMultiSelect } from "./SearchMultiSelect";
 
 export const SearchMultiSelectDemo = () => {
@@ -26,46 +26,54 @@ export const SearchMultiSelectDemo = () => {
   };
 
   return (
-    <Stack>
-      <Flex justify="space-between">
-        <Title color="red" order={2}>
-          Work in progress
-        </Title>
-        <DemoShell.Source
-          componentLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/SearchMultiSelect/SearchMultiSelect.tsx"
-          demoLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/SearchMultiSelect/SearchMultiSelectDemo.tsx"
-        />
-      </Flex>
+    <Box>
+      <DemoHeader>
+        <Box>
+          <Badge color="red">Work in progress</Badge>
+        </Box>
 
-      <DemoShell header="Experimental">
-        <Card w="400px" h="400px">
-          <Divider m="md" label="stored value" />
-          <Code block>{JSON.stringify(value)}</Code>
+        <Group position="apart" align="flex-end">
+          <Title>Search Multi Select</Title>
 
-          <Divider m="md" label="search response" />
-          <Code block>{JSON.stringify(res)}</Code>
-
-          <Divider m="md" />
-          <SearchMultiSelect
-            state={value}
-            setState={setValue}
-            search={search}
-            defaultData={[
-              {
-                value: "1",
-                label: "iphone 9",
-              },
-            ]}
-            creatable
-            getCreateLabel={(query) => `+ Create ${query}`}
-            // onCreate={(query) => {
-            //   const item = { value: query, label: query };
-            //   setData((current) => [...current, item]);
-            //   return item;
-            // }}
+          <Source
+            componentLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/SearchMultiSelect/SearchMultiSelect.tsx"
+            demoLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/SearchMultiSelect/SearchMultiSelectDemo.tsx"
           />
-        </Card>
-      </DemoShell>
-    </Stack>
+        </Group>
+
+        <Text>TBD</Text>
+      </DemoHeader>
+      <DemoContent>
+        <DemoShell header="Experimental">
+          <Card w="400px" h="400px">
+            <Divider m="md" label="stored value" />
+            <Code block>{JSON.stringify(value)}</Code>
+
+            <Divider m="md" label="search response" />
+            <Code block>{JSON.stringify(res)}</Code>
+
+            <Divider m="md" />
+            <SearchMultiSelect
+              state={value}
+              setState={setValue}
+              search={search}
+              defaultData={[
+                {
+                  value: "1",
+                  label: "iphone 9",
+                },
+              ]}
+              creatable
+              getCreateLabel={(query) => `+ Create ${query}`}
+              // onCreate={(query) => {
+              //   const item = { value: query, label: query };
+              //   setData((current) => [...current, item]);
+              //   return item;
+              // }}
+            />
+          </Card>
+        </DemoShell>
+      </DemoContent>
+    </Box>
   );
 };

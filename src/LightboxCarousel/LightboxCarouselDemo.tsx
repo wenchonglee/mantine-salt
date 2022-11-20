@@ -1,5 +1,5 @@
-import { Card, Flex, Stack, Title } from "@mantine/core";
-import { DemoShell } from "../core";
+import { Badge, Box, Card, Group, Text, Title } from "@mantine/core";
+import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
 import { LightboxCarousel } from "./LightboxCarousel";
 
 const sources = [
@@ -14,34 +14,43 @@ const sources = [
 
 export const LightboxCarouselDemo = () => {
   return (
-    <Stack>
-      <Flex justify="space-between">
-        <Title color="red" order={2}>
-          Work in progress
-        </Title>
-        <DemoShell.Source
-          componentLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/LightboxCarousel/LightboxCarousel.tsx"
-          demoLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/LightboxCarousel/LightboxCarouselDemo.tsx"
-        />
-      </Flex>
+    <Box>
+      <DemoHeader>
+        <Box>
+          <Badge color="red">Work in progress</Badge>
+        </Box>
 
-      <DemoShell
-        header="Default"
-        description="Clicking on an image opens a lightbox. If the image in the lightbox is larger than the space provided, it can be zoomed in."
-      >
-        <Card w="100%">
-          <LightboxCarousel imageSrc={sources} />
-        </Card>
-      </DemoShell>
+        <Group position="apart" align="flex-end">
+          <Title>Lightbox Carousel</Title>
 
-      <DemoShell
-        header="Fewer items"
-        description="If the space can accommodate all images, then no controls are rendered"
-      >
-        <Card w="100%">
-          <LightboxCarousel imageSrc={sources.slice(0, 2)} />
-        </Card>
-      </DemoShell>
-    </Stack>
+          <Source
+            componentLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/LightboxCarousel/LightboxCarousel.tsx"
+            demoLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/LightboxCarousel/LightboxCarouselDemo.tsx"
+          />
+        </Group>
+
+        <Text>TBD</Text>
+      </DemoHeader>
+
+      <DemoContent>
+        <DemoShell
+          header="Default"
+          description="Clicking on an image opens a lightbox. If the image in the lightbox is larger than the space provided, it can be zoomed in."
+        >
+          <Card w="100%">
+            <LightboxCarousel imageSrc={sources} />
+          </Card>
+        </DemoShell>
+
+        <DemoShell
+          header="Fewer items"
+          description="If the space can accommodate all images, then no controls are rendered"
+        >
+          <Card w="100%">
+            <LightboxCarousel imageSrc={sources.slice(0, 2)} />
+          </Card>
+        </DemoShell>
+      </DemoContent>
+    </Box>
   );
 };

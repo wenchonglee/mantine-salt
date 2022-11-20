@@ -1,87 +1,24 @@
-import { Grid } from "@mantine/core";
-import { IconAppWindow, IconInputSearch, IconPhotoUp, IconRowInsertBottom, IconTable, IconTrees } from "@tabler/icons";
-import { GridItem } from "./GridItem";
-import { Routes } from "./routes";
+import { Alert, Box, Text, Title } from "@mantine/core";
+import { DemoContent } from "./DemoShell";
 
 export const Home = () => {
   return (
-    <Grid>
-      <GridItem to={Routes.TruncatedText}>
-        <GridItem.Icon gradient={{ from: "blue", to: "teal", deg: 45 }}>
-          <IconRowInsertBottom size={64} color="white" />
-        </GridItem.Icon>
+    <Box p="xl">
+      <DemoContent>
+        <Title>Mantine Salt</Title>
+        <Text italic color="dimmed" size="xs">
+          niche componnets built with mantine
+        </Text>
 
-        <GridItem.Content title="Truncated Text" content="Render a 'show more' button when line clamp is active" />
-      </GridItem>
-
-      <GridItem to={Routes.OverflowTabs}>
-        <GridItem.Icon gradient={{ from: "teal", to: "green", deg: 45 }}>
-          <IconAppWindow size={64} color="white" />
-        </GridItem.Icon>
-
-        <GridItem.Content title="Overflow Tabs" content="Scrollable, single row tabs" />
-      </GridItem>
-
-      <GridItem to={Routes.OverflowTabs2}>
-        <GridItem.Icon gradient={{ from: "green", to: "blue", deg: 45 }}>
-          <IconAppWindow size={64} color="white" />
-        </GridItem.Icon>
-
-        <GridItem.Content title="Overflow Tabs 2" content="Single row tabs with menu" />
-      </GridItem>
-
-      <GridItem to={Routes.LightboxCarousel}>
-        <GridItem.Icon gradient={{ from: "green", to: "lime", deg: 45 }}>
-          <IconPhotoUp size={64} color="white" />
-        </GridItem.Icon>
-
-        <GridItem.Content title="Lightbox Carousel" content="A @mantine/carousel with lightbox behavior" />
-      </GridItem>
-
-      <GridItem to={Routes.MantineAgGrid}>
-        <GridItem.Icon
-          // gradient={{ from: "green", to: "lime", deg: 45 }}
-          gradient={{ from: "gray", to: "gray", deg: 45 }}
-        >
-          <IconTable size={64} color="white" />
-        </GridItem.Icon>
-
-        <GridItem.Content
-          title="Ag-grid Themed Table"
-          // content="Tree select"
-          content="Work in progress"
-        />
-      </GridItem>
-
-      <GridItem to={Routes.Home}>
-        <GridItem.Icon
-          // gradient={{ from: "green", to: "lime", deg: 45 }}
-          gradient={{ from: "gray", to: "gray", deg: 45 }}
-        >
-          <IconTrees size={64} color="white" />
-        </GridItem.Icon>
-
-        <GridItem.Content
-          title="Tree Dropdown"
-          // content="Tree select"
-          content="Work in progress"
-        />
-      </GridItem>
-
-      <GridItem to={Routes.SearchMultiSelect}>
-        <GridItem.Icon
-          // gradient={{ from: "green", to: "lime", deg: 45 }}
-          gradient={{ from: "gray", to: "gray", deg: 45 }}
-        >
-          <IconInputSearch size={64} color="white" />
-        </GridItem.Icon>
-
-        <GridItem.Content
-          title="Search MultiSelect"
-          // content="Tree select"
-          content="Work in progress"
-        />
-      </GridItem>
-    </Grid>
+        <Alert title={<Title order={2}>Disclaimer</Title>} w="fit-content">
+          <Text>
+            This repository contains a few components I wrote for work. <br />
+            As such, they are purpose built for my usage and may not meet your needs. <br /> <br />
+            In the spirit of sharing, they are open sourced and you're welcome to reuse the code and convert it into
+            something else.
+          </Text>
+        </Alert>
+      </DemoContent>
+    </Box>
   );
 };

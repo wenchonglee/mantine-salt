@@ -1,5 +1,6 @@
-import { Card, CSSObject, Flex, Stack, Tabs, Text } from "@mantine/core";
-import { DemoShell } from "../core";
+import { Anchor, Badge, Box, Card, Code, CSSObject, Group, Text, Title } from "@mantine/core";
+import { useState } from "react";
+import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
 import { OverflowTabs } from "./OverflowTabs";
 
 const cardStyles: CSSObject = {
@@ -10,78 +11,78 @@ const cardStyles: CSSObject = {
 const dummyArray = new Array(10).fill(undefined);
 
 export const OverflowTabsDemo = () => {
+  const [value, setValue] = useState<string | null>("0");
+
   return (
-    <Stack>
-      <Flex justify="flex-end">
-        <DemoShell.Source
-          componentLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/OverflowTabs/OverflowTabs.tsx"
-          demoLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/OverflowTabs/OverflowTabsDemo.tsx"
-        />
-      </Flex>
+    <Box>
+      <DemoHeader>
+        <Box>
+          <Badge color="red">Work in progress</Badge>
+        </Box>
 
-      <DemoShell
-        header="Default"
-        description="Has a resize observer to update TabsList overflow state. 
-        When overflown, left/right buttons are rendered (tabs can be also be scrolled by mouse wheel or swipe gesture)"
-      >
-        <Card withBorder sx={cardStyles}>
-          <OverflowTabs defaultValue="0">
-            <Tabs.List>
-              {dummyArray.map((_, index) => {
-                return (
-                  <Tabs.Tab key={index} value={`${index}`}>
-                    Tab {index}
-                  </Tabs.Tab>
-                );
-              })}
-            </Tabs.List>
+        <Group position="apart" align="flex-end">
+          <Title>Overflow Tabs</Title>
 
-            {dummyArray.map((_, index) => {
-              return (
-                <Tabs.Panel key={index} value={`${index}`} mt="md">
-                  <Text>
-                    Tab {index}
-                    <br />
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-                    and scrambled it to make a type specimen book.
-                  </Text>
-                </Tabs.Panel>
-              );
-            })}
-          </OverflowTabs>
-        </Card>
-      </DemoShell>
+          <Source
+            componentLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/OverflowTabs/OverflowTabs.tsx"
+            demoLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/OverflowTabs/OverflowTabsDemo.tsx"
+          />
+        </Group>
 
-      <DemoShell header="No resize observer">
-        <Card withBorder sx={cardStyles}>
-          <OverflowTabs defaultValue="0" hasResizeObserver={false}>
-            <Tabs.List>
-              {dummyArray.map((_, index) => {
-                return (
-                  <Tabs.Tab key={index} value={`${index}`}>
-                    Tab {index}
-                  </Tabs.Tab>
-                );
-              })}
-            </Tabs.List>
+        <Text>
+          Another spin to <Code>ScrollableTabs</Code>
+          <br />
+          This component forces tabs to be in a single row, instead of Mantine's default of wrapping to the next line.
+          <br /> <br /> Uses{" "}
+          <Anchor href="https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver">Resize Observer</Anchor> to
+          check if tabs have overflown, and render an <Code>Menu</Code> at the end if it has.
+        </Text>
+      </DemoHeader>
 
-            {dummyArray.map((_, index) => {
-              return (
-                <Tabs.Panel key={index} value={`${index}`} mt="md">
-                  <Text>
-                    Tab {index}
-                    <br />
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-                    and scrambled it to make a type specimen book.
-                  </Text>
-                </Tabs.Panel>
-              );
-            })}
-          </OverflowTabs>
-        </Card>
-      </DemoShell>
-    </Stack>
+      <DemoContent>
+        <Title order={2}>Usage</Title>
+        <Text>
+          Unlike <Code>ScrollableTabs</Code>, <Code>OverflowTabs</Code> has a limited API and is different from
+          Mantine's default.
+          <br /> It doesn't accept children and all tab specifications are passed via props.
+        </Text>
+
+        <DemoShell header="Default" snippet={snippetA}>
+          <Card withBorder sx={cardStyles}>
+            <OverflowTabs
+              value={value}
+              onTabChange={setValue}
+              tabs={dummyArray.map((_, index) => ({
+                value: `${index}`,
+                label: `Tab ${index}`,
+                rightSection: "test!",
+              }))}
+            />
+          </Card>
+        </DemoShell>
+
+        {/* <DemoShell header="Uncontrolled, without bounding box">
+          <OverflowTabs
+            tabs={dummyArray.map((_, index) => ({
+              value: `${index}`,
+              label: `Tab ${index}`,
+            }))}
+            defaultValue="2"
+          />
+        </DemoShell> */}
+      </DemoContent>
+    </Box>
   );
 };
+
+const snippetA = `
+<OverflowTabs
+  value={value}
+  onTabChange={setValue}
+  tabs={dummyArray.map((_, index) => ({
+    value: \`\${index}\`,
+    label: \`Tab \${index}\`,
+    rightSection: "test!",
+  }))}
+/>
+`;
