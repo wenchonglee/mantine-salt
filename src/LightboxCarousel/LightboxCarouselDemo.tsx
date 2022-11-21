@@ -1,4 +1,4 @@
-import { Badge, Box, Card, Group, Text, Title } from "@mantine/core";
+import { Badge, Box, Card, CSSObject, Group, Text, Title } from "@mantine/core";
 import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
 import { LightboxCarousel } from "./LightboxCarousel";
 
@@ -11,6 +11,11 @@ const sources = [
   "https://images.unsplash.com/photo-1664795522436-a114faf594fe?w=688&q=80",
   "https://images.unsplash.com/photo-1668259678563-95f9a18e2323?w=687&q=80",
 ];
+
+const cardStyles: CSSObject = {
+  width: "600px",
+  resize: "horizontal",
+};
 
 export const LightboxCarouselDemo = () => {
   return (
@@ -37,19 +42,19 @@ export const LightboxCarouselDemo = () => {
           header="Default"
           description="Clicking on an image opens a lightbox. If the image in the lightbox is larger than the space provided, it can be zoomed in."
         >
-          <Card w="100%">
+          <Card w="100%" withBorder sx={cardStyles}>
             <LightboxCarousel imageSrc={sources} />
           </Card>
         </DemoShell>
 
-        <DemoShell
+        {/* <DemoShell
           header="Fewer items"
           description="If the space can accommodate all images, then no controls are rendered"
         >
           <Card w="100%">
             <LightboxCarousel imageSrc={sources.slice(0, 2)} />
           </Card>
-        </DemoShell>
+        </DemoShell> */}
       </DemoContent>
     </Box>
   );
