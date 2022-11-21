@@ -41,10 +41,15 @@ export const SearchMultiSelectDemo = () => {
           />
         </Group>
 
-        <Text>TBD</Text>
+        <Text>
+          This component was written for scenarios where the data for <Code>MultiSelect</Code> is dynamic.
+          <br /> As of version Mantine version 5.8.2, this is a necessary workaround because the base component doesn't
+          handle it well.
+        </Text>
       </DemoHeader>
+
       <DemoContent>
-        <DemoShell header="Experimental">
+        <DemoShell header="Experimental & Work in Progress">
           <Card w="400px" h="400px">
             <Divider m="md" label="stored value" />
             <Code block>{JSON.stringify(value)}</Code>

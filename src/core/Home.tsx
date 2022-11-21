@@ -7,7 +7,7 @@ export const Home = () => {
       <DemoContent>
         <Title>Mantine Salt</Title>
         <Text italic color="dimmed" size="xs">
-          niche componnets built with mantine
+          niche components built with mantine
         </Text>
 
         <Alert title={<Title order={2}>Disclaimer</Title>} w="fit-content">

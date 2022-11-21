@@ -1,4 +1,5 @@
 import { Anchor, Badge, Box, Card, Code, CSSObject, Group, Text, Title } from "@mantine/core";
+import { IconBrandAmongus } from "@tabler/icons";
 import { useState } from "react";
 import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
 import { OverflowTabs } from "./OverflowTabs";
@@ -30,12 +31,12 @@ export const OverflowTabsDemo = () => {
         </Group>
 
         <Text>
-          Another spin to <Code>ScrollableTabs</Code>
+          <Code>ScrollableTabs</Code> was abandoned in favor of this.
           <br />
           This component forces tabs to be in a single row, instead of Mantine's default of wrapping to the next line.
           <br /> <br /> Uses{" "}
           <Anchor href="https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver">Resize Observer</Anchor> to
-          check if tabs have overflown, and render an <Code>Menu</Code> at the end if it has.
+          check if tabs have overflown, and render a <Code>Menu</Code> at the end if it has.
         </Text>
       </DemoHeader>
 
@@ -55,13 +56,13 @@ export const OverflowTabsDemo = () => {
               tabs={dummyArray.map((_, index) => ({
                 value: `${index}`,
                 label: `Tab ${index}`,
-                rightSection: "test!",
+                rightSection: index === 0 ? <IconBrandAmongus /> : undefined,
               }))}
             />
           </Card>
         </DemoShell>
 
-        {/* <DemoShell header="Uncontrolled, without bounding box">
+        <DemoShell header="Uncontrolled, without bounding box" snippet={snippetB}>
           <OverflowTabs
             tabs={dummyArray.map((_, index) => ({
               value: `${index}`,
@@ -69,20 +70,32 @@ export const OverflowTabsDemo = () => {
             }))}
             defaultValue="2"
           />
-        </DemoShell> */}
+        </DemoShell>
       </DemoContent>
     </Box>
   );
 };
 
 const snippetA = `
+const [value, setValue] = useState<string | null>("0");
+// ...
 <OverflowTabs
   value={value}
   onTabChange={setValue}
   tabs={dummyArray.map((_, index) => ({
     value: \`\${index}\`,
     label: \`Tab \${index}\`,
-    rightSection: "test!",
+    rightSection: index === 0 ? <IconBrandAmongus /> : undefined,
   }))}
+/>
+`;
+
+const snippetB = `
+<OverflowTabs
+  tabs={dummyArray.map((_, index) => ({
+    value: \`\${index}\`,
+    label: \`Tab \${index}\`,
+  }))}
+  defaultValue="2"
 />
 `;
