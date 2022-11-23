@@ -1,13 +1,20 @@
 import { createStyles, Image, ImageProps } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import { useLayoutEffect, useRef, useState } from "react";
 
+/**
+ * contain = limited size
+ * full-size = let the image grow to full size
+ * locked = don't allow toggling between contain and full-size (locked by default if the image is small enough to not need zoom)
+ */
 type ImageState = "contain" | "full-size" | "locked";
 type LightboxImageStyleProps = {
   imageSize: ImageState;
 };
 
-const useStyles = createStyles((theme, { imageSize }: LightboxImageStyleProps) => ({
+const useStyles = createStyles((_theme, { imageSize }: LightboxImageStyleProps) => ({
   root: {
+    overflow: "auto",
     "&:hover": {
       cursor: imageSize === "locked" ? "default" : imageSize === "contain" ? "zoom-in" : "zoom-out",
     },
@@ -17,9 +24,12 @@ const useStyles = createStyles((theme, { imageSize }: LightboxImageStyleProps) =
   },
 }));
 
-export const LightboxImage = (props: ImageProps) => {
+export const LightboxImage = (props: ImageProps & { carouselImageWidth: ImageProps["width"] }) => {
+  const { carouselImageWidth, ...others } = props;
+
   const [imageSize, setImageSize] = useState<ImageState>("contain");
-  const { classes } = useStyles({ imageSize });
+  const isSmallViewport = useMediaQuery("(max-width: 800px)");
+  const { classes, theme } = useStyles({ imageSize });
   const ref = useRef<HTMLImageElement>(null);
 
   useLayoutEffect(() => {
@@ -51,7 +61,10 @@ export const LightboxImage = (props: ImageProps) => {
     imageSize === "contain" || imageSize === "locked"
       ? {
           fit: imageSize === "locked" ? "none" : "contain",
-          height: "calc(100vh - 400px)",
+          // 100vh - modal padding - image height - buffer
+          height: isSmallViewport
+            ? `calc(100vh - ${carouselImageWidth}px - ${theme.spacing.md * 4}px)`
+            : `calc(100vh - ${theme.spacing.xl * 4}px - ${carouselImageWidth}px - ${theme.spacing.md * 4}px)`,
           width: "100%",
         }
       : {
@@ -69,7 +82,7 @@ export const LightboxImage = (props: ImageProps) => {
       }}
       onClick={handleClick}
       {...imageProps}
-      {...props}
+      {...others}
     />
   );
 };

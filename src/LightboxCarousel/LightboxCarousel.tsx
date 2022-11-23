@@ -1,34 +1,28 @@
-import { Carousel, CarouselProps, Embla } from "@mantine/carousel";
-import {
-  ActionIcon,
-  AspectRatio,
-  Box,
-  createStyles,
-  DefaultProps,
-  getDefaultZIndex,
-  Group,
-  Image,
-  Modal,
-  Selectors,
-  Stack,
-} from "@mantine/core";
-import { useDebouncedState } from "@mantine/hooks";
-import { IconX } from "@tabler/icons";
+import { Box, createStyles, DefaultProps, Group, Image, ImageProps, Selectors } from "@mantine/core";
+import { debounce } from "lodash";
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
-import { LightboxImage } from "./LightboxImage";
+import { ModalCarousel } from "./ModalCarousel";
 
 const useStyles = createStyles((theme) => ({
-  carouselControl: {
-    "&[data-inactive]": {
-      opacity: 0,
-      cursor: "default",
+  root: {
+    overflow: "hidden",
+  },
+  imageContainer: {
+    position: "relative",
+    transition: "filter 250ms ease",
+    "&:hover": {
+      cursor: "pointer",
+      filter: "brightness(80%)",
     },
   },
-  closeButton: {
+  imageOverlay: {
+    fontSize: theme.fontSizes.xl,
     position: "absolute",
-    right: theme.spacing.sm,
-    top: theme.spacing.sm,
-    zIndex: getDefaultZIndex("modal"),
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    zIndex: 1,
+    color: theme.white,
   },
 }));
 
@@ -36,25 +30,45 @@ type LightboxCarouselStylesNames = Selectors<typeof useStyles>;
 
 interface LightboxCarouselProps extends DefaultProps<LightboxCarouselStylesNames> {
   imageSrc: string[];
+  imageWidth?: ImageProps["width"];
+  debounceWait?: number;
 }
 
+/** Arbitrary buffer so that overflow is detected "ahead of time" */
 const BUFFER = 24;
 
+/** Default image width */
+const IMAGE_WIDTH = 200;
+
+/** Default debounce wait time (ms) */
+const DEBOUNCE_WAIT = 50;
+
 export const LightboxCarousel = (props: LightboxCarouselProps) => {
-  const { imageSrc } = props;
+  const {
+    className,
+    classNames,
+    styles,
+    unstyled,
+    imageSrc,
+    imageWidth = IMAGE_WIDTH,
+    debounceWait = DEBOUNCE_WAIT,
+  } = props;
+
+  const { classes, cx, theme } = useStyles(undefined, {
+    name: "LightboxCarousel",
+    classNames,
+    styles,
+    unstyled,
+  });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSrc, setSelectedSrc] = useState<string>();
-  // const matches = useMediaQuery("(max-width: 800px)");
 
-  const { classes } = useStyles();
   const ref = useRef<HTMLDivElement>(null);
   const allRef = useRef<(HTMLDivElement | null)[]>([]);
   const frameID = useRef<number>(0);
-  const [embla, setEmbla] = useState<Embla | null>(null);
-  const isOverflowing2 = embla ? embla.slidesInView().length < imageSrc.length : true;
 
-  const [overflownIndex, setOverflownIndex] = useDebouncedState(Infinity, 50, { leading: true });
+  const [overflownIndex, setOverflownIndex] = useState(Infinity);
 
   const observer = useMemo(() => {
     if (typeof window === "undefined") {
@@ -89,173 +103,73 @@ export const LightboxCarousel = (props: LightboxCarouselProps) => {
     };
   }, []);
 
-  const findOverflownIndex = () => {
-    if (ref.current && allRef.current) {
-      let availableWidth = ref.current.clientWidth - BUFFER;
+  const findOverflownIndex = debounce(
+    () => {
+      if (ref.current && allRef.current) {
+        let availableWidth = ref.current.clientWidth - BUFFER;
 
-      for (let i = 0; i < allRef.current.length; i++) {
-        const tabRef = allRef.current[i];
-        if (tabRef) {
-          availableWidth -= tabRef.clientWidth + 16; //! 16 = gap
-          if (availableWidth <= 0) {
-            setOverflownIndex(i);
-            return;
+        for (let i = 0; i < allRef.current.length; i++) {
+          const tabRef = allRef.current[i];
+          if (tabRef) {
+            // also account for the gap size of Group (theme.spacing.md)
+            availableWidth -= tabRef.clientWidth + theme.spacing.md;
+            if (availableWidth <= 0) {
+              setOverflownIndex(i);
+              return;
+            }
           }
         }
+        setOverflownIndex(Infinity);
       }
-      setOverflownIndex(allRef.current.length);
-    }
-  };
-
-  const carouselSlides = useMemo(
-    () =>
-      imageSrc.map((src, index) => (
-        <Carousel.Slide size={200} key={index}>
-          <AspectRatio ratio={1}>
-            <Image
-              height="100%"
-              radius="md"
-              src={src}
-              fit="cover"
-              styles={{
-                imageWrapper: {
-                  height: "100%",
-                  width: "100%",
-                },
-                figure: {
-                  height: "100%",
-                  width: "100%",
-                  transition: "filter 150ms ease",
-                  "&:hover": {
-                    cursor: "pointer",
-                    filter: "brightness(90%)",
-                  },
-                },
-              }}
-              onClick={() => {
-                setIsModalOpen(true);
-                setSelectedSrc(src);
-              }}
-            />
-          </AspectRatio>
-        </Carousel.Slide>
-      )),
-    [imageSrc]
+    },
+    debounceWait,
+    { leading: true }
   );
 
-  const commonCarouselProps: CarouselProps = {
-    align: "start",
-    classNames: {
-      control: classes.carouselControl,
-    },
-    draggable: false,
-    height: "200",
-    slideGap: "xs",
+  const onChangeImage = (src: string) => {
+    setIsModalOpen(true);
+    setSelectedSrc(src);
   };
 
   return (
     <>
-      <Group
-        sx={{
-          overflow: "hidden",
-        }}
-        noWrap
-        ref={ref}
-      >
+      <Group ref={ref} className={cx(classes.root, className)} noWrap>
         {imageSrc.map((src, index) => (
           <Box
+            key={index}
             ref={(element: HTMLDivElement | null) => (allRef.current[index] = element)}
-            sx={{
-              position: "relative",
-            }}
+            className={classes.imageContainer}
+            onClick={() => onChangeImage(src)}
           >
             {overflownIndex !== Infinity && index === overflownIndex - 1 && (
-              <Box
-                sx={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  zIndex: 1,
-                  backgroundColor: "black",
-                  width: "100%",
-                  height: "100%",
-                  opacity: 0.8,
-                  borderRadius: "8px",
-                }}
-              >
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "100%",
-                    borderRadius: "8px",
-                    fontWeight: 500,
-                    fontSize: "24px",
-                  }}
-                >
-                  +{imageSrc.length - overflownIndex}
-                </Box>
-              </Box>
+              <Box className={classes.imageOverlay}>+{imageSrc.length - overflownIndex}</Box>
             )}
 
             <Image
-              key={index}
-              height="200px"
-              width="200px"
+              fit="cover"
               radius="md"
               src={src}
-              fit="cover"
-              styles={{
-                imageWrapper: {
-                  height: "100%",
-                  width: "100%",
-                },
-                figure: {
-                  height: "100%",
-                  width: "100%",
-                  transition: "filter 150ms ease",
-                  "&:hover": {
-                    cursor: "pointer",
-                    filter: "brightness(90%)",
-                  },
-                },
+              width={imageWidth}
+              style={{
+                visibility: index >= overflownIndex ? "hidden" : "visible",
+                filter: overflownIndex !== Infinity && index === overflownIndex - 1 ? "brightness(20%)" : undefined,
               }}
-              style={{ visibility: index >= overflownIndex ? "hidden" : "visible" }}
-              onClick={() => {
-                setIsModalOpen(true);
-                setSelectedSrc(src);
+              styles={{
+                image: { aspectRatio: "1" },
               }}
             />
           </Box>
         ))}
       </Group>
 
-      <Modal
-        opened={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        size="80%"
-        overlayBlur={1}
-        trapFocus={false}
-        withCloseButton={false}
-      >
-        <ActionIcon variant="default" className={classes.closeButton} onClick={() => setIsModalOpen(false)}>
-          <IconX />
-        </ActionIcon>
-
-        <Stack p={0} sx={{ overflow: "hidden" }}>
-          <Box pos="relative">
-            <LightboxImage src={selectedSrc} />
-          </Box>
-
-          <Box m="md">
-            <Carousel {...commonCarouselProps} getEmblaApi={setEmbla} withControls={isOverflowing2}>
-              {carouselSlides}
-            </Carousel>
-          </Box>
-        </Stack>
-      </Modal>
+      <ModalCarousel
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        imageSrc={imageSrc}
+        selectedSrc={selectedSrc}
+        onChangeImage={onChangeImage}
+        imageWidth={imageWidth}
+      />
     </>
   );
 };
