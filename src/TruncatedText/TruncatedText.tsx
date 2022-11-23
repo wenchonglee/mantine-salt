@@ -8,7 +8,9 @@ type AnchorProps = {
 
 const useStyles = createStyles((_theme, { isDisplayed }: AnchorProps) => ({
   root: {},
-  text: {},
+  text: {
+    whiteSpace: "pre-wrap",
+  },
   anchor: {
     display: isDisplayed ? "unset" : "none",
     padding: 0,

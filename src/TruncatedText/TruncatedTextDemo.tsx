@@ -71,7 +71,7 @@ export const TruncatedTextDemo = () => {
               when an unknown printer took a galley of type and scrambled it to make a type specimen book."
               styles={(theme) => ({
                 text: {
-                  color: theme.colors.cyan,
+                  color: theme.colors.cyan[4],
                 },
                 anchor: {
                   textDecoration: "underline",
