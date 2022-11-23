@@ -18,7 +18,7 @@ const DemoShell = ({ children, description, header, snippet }: DemoShellProps) =
       <Card.Section bg={theme.colorScheme === "dark" ? "dark.8" : "gray.0"} p="md">
         <Text fw={700}>{header}</Text>
         {description && (
-          <Text color="dimmed" size="sm">
+          <Text color="dimmed" size="sm" sx={{ whiteSpace: "pre-wrap" }}>
             {description}
           </Text>
         )}

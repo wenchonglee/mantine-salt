@@ -1,4 +1,4 @@
-import { Anchor, Badge, Box, Card, Code, CSSObject, Group, Text, Title } from "@mantine/core";
+import { Anchor, Badge, Box, Button, Card, Code, CSSObject, Group, HoverCard, Text, Title } from "@mantine/core";
 import { IconBrandAmongus } from "@tabler/icons";
 import { useState } from "react";
 import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
@@ -18,7 +18,7 @@ export const OverflowTabsDemo = () => {
     <Box>
       <DemoHeader>
         <Box>
-          <Badge color="red">Work in progress</Badge>
+          <Badge color="green">Stable</Badge>
         </Box>
 
         <Group position="apart" align="flex-end">
@@ -71,6 +71,48 @@ export const OverflowTabsDemo = () => {
             defaultValue="2"
           />
         </DemoShell>
+
+        <DemoShell
+          header="Custom overflow button"
+          snippet={snippetC}
+          description={`You can pass in overflow props to customize how the overflow button looks and behaves. \nThe default debounce time can also be overridden.`}
+        >
+          <Card withBorder sx={cardStyles}>
+            <OverflowTabs
+              tabs={dummyArray.map((_, index) => ({
+                value: `${index}`,
+                label: `Tab ${index}`,
+              }))}
+              defaultValue="2"
+              debounceWait={0}
+              overflowBuffer={80}
+              overflowComponent={(tabs, selectedTab, onTabChange) => (
+                <HoverCard withinPortal>
+                  <HoverCard.Target>
+                    <Button compact variant="subtle">
+                      Show More
+                    </Button>
+                  </HoverCard.Target>
+
+                  <HoverCard.Dropdown>
+                    <Button.Group orientation="vertical">
+                      {tabs.map((tab) => (
+                        <Button
+                          key={tab.value}
+                          onClick={() => onTabChange(tab.value)}
+                          color={selectedTab === tab.value ? "blue" : "gray"}
+                          variant="subtle"
+                        >
+                          {tab.value}
+                        </Button>
+                      ))}
+                    </Button.Group>
+                  </HoverCard.Dropdown>
+                </HoverCard>
+              )}
+            />
+          </Card>
+        </DemoShell>
       </DemoContent>
     </Box>
   );
@@ -97,5 +139,41 @@ const snippetB = `
     label: \`Tab \${index}\`,
   }))}
   defaultValue="2"
+/>
+`;
+
+const snippetC = `
+<OverflowTabs
+  tabs={dummyArray.map((_, index) => ({
+    value: \`\${index}\`,
+    label: \`Tab \${index}\`,
+  }))}
+  defaultValue="2"
+  debounceWait={0}
+  overflowBuffer={80}
+  overflowComponent={(tabs, selectedTab, onTabChange) => (
+    <HoverCard withinPortal>
+      <HoverCard.Target>
+        <Button compact variant="subtle">
+          Show More
+        </Button>
+      </HoverCard.Target>
+
+      <HoverCard.Dropdown>
+        <Button.Group orientation="vertical">
+          {tabs.map((tab) => (
+            <Button
+              key={tab.value}
+              onClick={() => onTabChange(tab.value)}
+              color={selectedTab === tab.value ? "blue" : "gray"}
+              variant="subtle"
+            >
+              {tab.value}
+            </Button>
+          ))}
+        </Button.Group>
+      </HoverCard.Dropdown>
+    </HoverCard>
+  )}
 />
 `;
