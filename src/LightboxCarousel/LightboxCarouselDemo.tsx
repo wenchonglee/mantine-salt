@@ -1,4 +1,4 @@
-import { Badge, Box, Card, CSSObject, Group, Text, Title } from "@mantine/core";
+import { Badge, Box, Card, CSSObject, Divider, Flex, Group, Text, Title } from "@mantine/core";
 import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
 import { LightboxCarousel } from "./LightboxCarousel";
 
@@ -67,6 +67,34 @@ export const LightboxCarouselDemo = () => {
             <LightboxCarousel imageSrc={sources} imageWidth={100} debounceWait={0} />
           </Card>
         </DemoShell>
+
+        <DemoShell
+          header="Grid/Flex parents"
+          description="When the parent element is a flex or grid, you will need to add min-width: 0"
+          snippet={snippetD}
+        >
+          <Card w="100%" withBorder sx={cardStyles}>
+            <Text italic size="xs">
+              without <code>min-width: 0</code>, doesn't work correctly
+            </Text>
+
+            <Flex>
+              <Box>
+                <LightboxCarousel imageSrc={sources} />
+              </Box>
+            </Flex>
+            <Divider my="md" mx="-md" />
+
+            <Text italic size="xs">
+              with <code>min-width: 0</code>
+            </Text>
+            <Flex>
+              <Box miw={0}>
+                <LightboxCarousel imageSrc={sources} />
+              </Box>
+            </Flex>
+          </Card>
+        </DemoShell>
       </DemoContent>
     </Box>
   );
@@ -88,4 +116,20 @@ const sources = [
 
 const snippetC = `
 <LightboxCarousel imageSrc={sources} imageWidth={100} debounceWait={0} />
+`;
+
+const snippetD = `
+<Flex>
+  <Box>
+    <LightboxCarousel imageSrc={sources} />
+  </Box>
+</Flex>
+
+<Divider my="md" mx="-md" />
+
+<Flex>
+  <Box miw={0}>
+    <LightboxCarousel imageSrc={sources} />
+  </Box>
+</Flex>
 `;
