@@ -31,8 +31,6 @@ export const OverflowTabsDemo = () => {
         </Group>
 
         <Text>
-          <Code>ScrollableTabs</Code> was abandoned in favor of this.
-          <br />
           This component forces tabs to be in a single row, instead of Mantine's default of wrapping to the next line.
           <br /> <br /> Uses{" "}
           <Anchor href="https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver">Resize Observer</Anchor> to

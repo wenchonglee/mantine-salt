@@ -3,6 +3,7 @@ import {
   Collapse,
   createStyles,
   Group,
+  MantineColor,
   Navbar as MantineNavbar,
   ScrollArea,
   Text,
@@ -14,6 +15,7 @@ import {
   IconChevronRight,
   IconInputSearch,
   IconMicroscope,
+  IconMoodEmpty,
   IconPhotoUp,
   IconRowInsertBottom,
   TablerIcon,
@@ -38,14 +40,13 @@ const useLinksStyles = createStyles((theme) => ({
   },
 
   link: {
-    fontWeight: 500,
+    // fontWeight: 500,
     display: "block",
     textDecoration: "none",
     padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
     paddingLeft: 31,
     marginLeft: 30,
     fontSize: theme.fontSizes.sm,
-    color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.colors.gray[7],
     borderLeft: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[3]}`,
 
     "&:hover": {
@@ -73,6 +74,8 @@ interface LinksGroupProps {
   icon: TablerIcon;
   label: string;
   initiallyOpened?: boolean;
+  iconColor?: MantineColor;
+  isDimmed?: boolean;
   links?: { label: string; link: string }[];
   link?: string;
   setOpened(value: boolean): void;
@@ -82,6 +85,8 @@ export function LinksGroup({
   icon: Icon,
   label,
   initiallyOpened,
+  iconColor,
+  isDimmed,
   links,
   link,
   setOpened: setNavbarOpened,
@@ -91,19 +96,20 @@ export function LinksGroup({
   const [opened, setOpened] = useState(initiallyOpened || false);
   const ChevronIcon = theme.dir === "ltr" ? IconChevronRight : IconChevronLeft;
   const items = (hasLinks ? links : []).map((link) => (
-    <Link
+    <UnstyledButton
+      component={Link}
       key={link.label}
       to={link.link}
       style={{ textDecoration: "none" }}
       getActiveProps={() => ({
         className: classes.activeLink,
       })}
-      onClick={() => {
-        setNavbarOpened(false);
-      }}
+      onClick={() => setNavbarOpened(false)}
     >
-      <Text className={classes.link}>{link.label}</Text>
-    </Link>
+      <Text className={classes.link} color={isDimmed ? "dimmed" : undefined}>
+        {link.label}
+      </Text>
+    </UnstyledButton>
   ));
 
   return (
@@ -112,10 +118,12 @@ export function LinksGroup({
         <UnstyledButton onClick={() => setOpened((o) => !o)} className={classes.control}>
           <Group position="apart" spacing={0}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <ThemeIcon variant="light" size={30}>
+              <ThemeIcon variant="light" size={30} color={iconColor}>
                 <Icon size={18} />
               </ThemeIcon>
-              <Box ml="md">{label}</Box>
+              <Text ml="md" color={isDimmed ? "dimmed" : undefined}>
+                {label}
+              </Text>
             </Box>
             {hasLinks && (
               <ChevronIcon
@@ -141,8 +149,7 @@ const navs = [
     icon: IconRowInsertBottom,
     initiallyOpened: true,
     links: [
-      { label: "Truncated Text", link: Routes.TruncatedText },
-      { label: "Scrollable Tabs", link: Routes.ScrollableTabs },
+      { label: "Overflow Box", link: Routes.OverflowBox },
       { label: "Overflow Tabs", link: Routes.OverflowTabs2 },
     ],
   },
@@ -166,6 +173,17 @@ const navs = [
         link: Routes.LightboxCarousel,
       },
       { label: "Ag-grid Themed Table", link: Routes.MantineAgGrid },
+    ],
+  },
+  {
+    label: "Abandoned",
+    icon: IconMoodEmpty,
+    iconColor: "orange",
+    isDimmed: true,
+    initiallyOpened: true,
+    links: [
+      { label: "Truncated Text", link: Routes.TruncatedText },
+      { label: "Scrollable Tabs", link: Routes.ScrollableTabs },
     ],
   },
 ];

@@ -15,6 +15,9 @@ export const ScrollableTabsDemo = () => {
       <DemoHeader>
         <Box>
           <Badge color="yellow">Abandoned</Badge>
+          <Text size="xs" color="yellow" italic>
+            Abandoned in favor of Overflow Tabs
+          </Text>
         </Box>
 
         <Group position="apart" align="flex-end">

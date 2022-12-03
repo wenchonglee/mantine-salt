@@ -12,7 +12,10 @@ export const TruncatedTextDemo = () => {
     <Box>
       <DemoHeader>
         <Box>
-          <Badge color="green">Stable</Badge>
+          <Badge color="yellow">Abandoned</Badge>
+          <Text size="xs" color="yellow" italic>
+            Abandoned in favor of Overflow Box
+          </Text>
         </Box>
 
         <Group position="apart" align="flex-end">
