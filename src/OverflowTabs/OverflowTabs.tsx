@@ -1,12 +1,25 @@
-import { ActionIcon, Box, createStyles, DefaultProps, Menu, Selectors, TabProps, Tabs, TabsProps } from "@mantine/core";
+import {
+  Box,
+  createStyles,
+  DefaultProps,
+  Menu,
+  Selectors,
+  TabProps,
+  Tabs,
+  TabsProps,
+  UnstyledButton,
+} from "@mantine/core";
 import { useUncontrolled } from "@mantine/hooks";
-import { IconDotsVertical } from "@tabler/icons";
+import { IconChevronDown } from "@tabler/icons";
 import { debounce } from "lodash";
 import { ReactNode, useLayoutEffect, useMemo, useRef, useState } from "react";
 
-const useStyles = createStyles((theme) => ({
+type OverflowTabsStylesProps = {
+  isOverflownTabSelected: boolean;
+};
+
+const useStyles = createStyles((theme, { isOverflownTabSelected }: OverflowTabsStylesProps) => ({
   root: {
-    overflow: "auto",
     width: "100%",
   },
   wrapper: {
@@ -17,13 +30,26 @@ const useStyles = createStyles((theme) => ({
   },
   tabsList: {
     flexWrap: "unset",
+    flexGrow: 1,
+    justifyContent: "center",
   },
   tab: {},
-  buttonContainer: {
+  overflowTabContainer: {
     position: "absolute",
     right: 0,
-    top: "50%",
-    transform: "translate(0%, -50%)",
+    height: "100%",
+  },
+  overflowTab: {
+    borderBottom: isOverflownTabSelected
+      ? `2px solid ${theme.fn.variant({ variant: "filled", color: theme.primaryColor }).background}`
+      : `2px solid transparent`,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    height: "100%",
+    fontSize: theme.fontSizes.sm,
+    paddingLeft: theme.spacing.md,
+    paddingRight: theme.spacing.md / 2,
   },
 }));
 
@@ -31,7 +57,7 @@ type OverflowTabsStylesNames = Selectors<typeof useStyles>;
 type OverflowTab = Omit<TabProps, "children"> & { label: string };
 
 interface OverflowTabsProps
-  extends Omit<TabsProps, keyof DefaultProps | "orientation" | "children">,
+  extends Omit<TabsProps, keyof DefaultProps | "orientation" | "children" | "variant">,
     DefaultProps<OverflowTabsStylesNames> {
   tabs: OverflowTab[];
   debounceWait?: number;
@@ -62,18 +88,56 @@ export const OverflowTabs = (props: OverflowTabsProps) => {
     ...others
   } = props;
 
-  const { classes, cx } = useStyles(undefined, {
-    name: "OverflowTabs",
-    classNames,
-    styles,
-    unstyled,
-  });
-
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const tRef = useRef<HTMLButtonElement>(null);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const frameID = useRef<number>(0);
   const [overflownIndex, setOverflownIndex] = useState(Infinity);
-  const [tabValue, handleTabChange] = useUncontrolled({ value, onChange: onTabChange, defaultValue });
+  const [tabValue, setTabValue] = useUncontrolled({ value, onChange: onTabChange, defaultValue });
+
+  const overflownTabs = tabs.slice(overflownIndex);
+  const isOverflownTabSelected = overflownTabs.some((tab) => tab.value === tabValue);
+
+  const { classes, cx } = useStyles(
+    { isOverflownTabSelected },
+    {
+      name: "OverflowTabs",
+      classNames,
+      styles,
+      unstyled,
+    }
+  );
+
+  const findOverflownIndex = () => {
+    if (wrapperRef.current && tabRefs.current) {
+      let availableWidth = wrapperRef.current.clientWidth; // - overflowBuffer;
+
+      if (tRef.current) {
+        availableWidth -= tRef.current.clientWidth;
+      } else {
+        availableWidth -= overflowBuffer;
+      }
+
+      for (let i = 0; i < tabRefs.current.length; i++) {
+        const tabRef = tabRefs.current[i];
+        if (tabRef) {
+          availableWidth -= tabRef.clientWidth;
+          if (availableWidth <= 0) {
+            setOverflownIndex(i);
+            return;
+          }
+        }
+      }
+      setOverflownIndex(tabRefs.current.length);
+    }
+  };
+
+  const debouncedFindOverflownIndex = debounce(findOverflownIndex, debounceWait, { leading: true });
+
+  const handleTabChange = (value: string | null) => {
+    setTimeout(() => findOverflownIndex(), 0);
+    setTabValue(value);
+  };
 
   const observer = useMemo(() => {
     if (typeof window === "undefined") {
@@ -87,14 +151,14 @@ export const OverflowTabs = (props: OverflowTabsProps) => {
         cancelAnimationFrame(frameID.current);
 
         frameID.current = requestAnimationFrame(() => {
-          findOverflownIndex();
+          debouncedFindOverflownIndex();
         });
       }
     });
   }, []);
 
   useLayoutEffect(() => {
-    findOverflownIndex();
+    debouncedFindOverflownIndex();
     if (wrapperRef.current) {
       observer?.observe(wrapperRef.current);
     }
@@ -108,44 +172,25 @@ export const OverflowTabs = (props: OverflowTabsProps) => {
     };
   }, []);
 
-  const findOverflownIndex = debounce(
-    () => {
-      if (wrapperRef.current && tabRefs.current) {
-        let availableWidth = wrapperRef.current.clientWidth - overflowBuffer;
-
-        for (let i = 0; i < tabRefs.current.length; i++) {
-          const tabRef = tabRefs.current[i];
-          if (tabRef) {
-            availableWidth -= tabRef.clientWidth;
-            if (availableWidth <= 0) {
-              setOverflownIndex(i);
-              return;
-            }
-          }
-        }
-        setOverflownIndex(tabRefs.current.length);
-      }
-    },
-    debounceWait,
-    { leading: true }
-  );
-
   const renderOverflow = () => {
     if (overflownIndex < tabs.length) {
       if (overflowComponent !== undefined) {
-        return overflowComponent(tabs.slice(overflownIndex), tabValue, handleTabChange);
+        return overflowComponent(overflownTabs, tabValue, handleTabChange);
       }
+      const overflownTab = overflownTabs.find((tab) => tab.value === tabValue);
 
       return (
         <Menu withinPortal trigger="hover" position="bottom-end">
           <Menu.Target>
-            <ActionIcon color="gray">
-              <IconDotsVertical />
-            </ActionIcon>
+            <UnstyledButton className={classes.overflowTab} ref={tRef}>
+              <Box>{overflownTab ? overflownTab.label : `+ ${overflownTabs.length}`}</Box>
+              &nbsp;
+              <IconChevronDown size={16} />
+            </UnstyledButton>
           </Menu.Target>
 
           <Menu.Dropdown>
-            {tabs.slice(overflownIndex).map((tab, index) => (
+            {overflownTabs.map((tab, index) => (
               <Menu.Item
                 key={index}
                 sx={(theme) => ({
@@ -188,7 +233,7 @@ export const OverflowTabs = (props: OverflowTabsProps) => {
           })}
         </Tabs.List>
 
-        <Box className={classes.buttonContainer}>{renderOverflow()}</Box>
+        <Box className={classes.overflowTabContainer}>{renderOverflow()}</Box>
       </div>
     </Tabs>
   );
