@@ -1,6 +1,7 @@
-import { ActionIcon, Anchor, Badge, Box, Card, CSSObject, Group, Image, Text, Title } from "@mantine/core";
+import { ActionIcon, Anchor, Box, Card, CSSObject, Group, Image, Text, Title } from "@mantine/core";
 import { IconArrowBigDownLine, IconArrowBigUpLine } from "@tabler/icons";
 import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
+import { ProgressHoverCard } from "../core/ProgressBadge";
 import { OverflowBox } from "./OverflowBox";
 
 const cardStyles: CSSObject = {
@@ -13,7 +14,7 @@ export const OverflowBoxDemo = () => {
     <Box>
       <DemoHeader>
         <Box>
-          <Badge color="green">Stable</Badge>
+          <ProgressHoverCard stage="2" />
         </Box>
 
         <Group position="apart" align="flex-end">

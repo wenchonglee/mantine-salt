@@ -1,5 +1,6 @@
-import { Badge, Box, Card, CSSObject, Group, Text, Title } from "@mantine/core";
+import { Box, Card, CSSObject, Group, Text, Title } from "@mantine/core";
 import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
+import { ProgressHoverCard } from "../core/ProgressBadge";
 import { MantineAgGrid } from "./MantineAgGrid";
 
 const cardStyles: CSSObject = {
@@ -12,7 +13,7 @@ export const MantineAgGridDemo = () => {
     <Box>
       <DemoHeader>
         <Box>
-          <Badge color="red">Work in progress</Badge>
+          <ProgressHoverCard stage="0" />
         </Box>
 
         <Group position="apart" align="flex-end">

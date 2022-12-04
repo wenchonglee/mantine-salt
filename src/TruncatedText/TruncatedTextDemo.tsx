@@ -1,5 +1,6 @@
-import { Anchor, Badge, Box, Card, CSSObject, Group, Text, Title } from "@mantine/core";
+import { Anchor, Box, Card, CSSObject, Group, Text, Title } from "@mantine/core";
 import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
+import { ProgressHoverCard } from "../core/ProgressBadge";
 import { TruncatedText } from "./TruncatedText";
 
 const cardStyles: CSSObject = {
@@ -12,7 +13,7 @@ export const TruncatedTextDemo = () => {
     <Box>
       <DemoHeader>
         <Box>
-          <Badge color="yellow">Abandoned</Badge>
+          <ProgressHoverCard stage="abandoned" />
           <Text size="xs" color="yellow" italic>
             Abandoned in favor of Overflow Box
           </Text>

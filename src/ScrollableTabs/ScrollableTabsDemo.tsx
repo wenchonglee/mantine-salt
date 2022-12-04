@@ -1,5 +1,6 @@
-import { Anchor, Badge, Box, Card, Code, CSSObject, Group, Tabs, Text, Title } from "@mantine/core";
+import { Anchor, Box, Card, Code, CSSObject, Group, Tabs, Text, Title } from "@mantine/core";
 import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
+import { ProgressHoverCard } from "../core/ProgressBadge";
 import { ScrollableTabs } from "./ScrollableTabs";
 
 const cardStyles: CSSObject = {
@@ -14,7 +15,7 @@ export const ScrollableTabsDemo = () => {
     <Box>
       <DemoHeader>
         <Box>
-          <Badge color="yellow">Abandoned</Badge>
+          <ProgressHoverCard stage="abandoned" />
           <Text size="xs" color="yellow" italic>
             Abandoned in favor of Overflow Tabs
           </Text>

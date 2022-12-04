@@ -1,7 +1,8 @@
-import { Anchor, Badge, Box, Button, Card, Code, CSSObject, Group, HoverCard, Text, Title } from "@mantine/core";
+import { Anchor, Box, Button, Card, Code, CSSObject, Group, HoverCard, List, Text, Title } from "@mantine/core";
 import { IconBrandAmongus } from "@tabler/icons";
 import { useState } from "react";
 import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
+import { ProgressHoverCard } from "../core/ProgressBadge";
 import { OverflowTabs } from "./OverflowTabs";
 
 const cardStyles: CSSObject = {
@@ -18,7 +19,7 @@ export const OverflowTabsDemo = () => {
     <Box>
       <DemoHeader>
         <Box>
-          <Badge color="green">Stable</Badge>
+          <ProgressHoverCard stage="2" />
         </Box>
 
         <Group position="apart" align="flex-end">
@@ -35,6 +36,10 @@ export const OverflowTabsDemo = () => {
           <br /> <br /> Uses{" "}
           <Anchor href="https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver">Resize Observer</Anchor> to
           check if tabs have overflown, and render a <Code>Menu</Code> at the end if it has.
+          <p>Caveats</p>
+          <List>
+            <List.Item>This is only styled for the default variant</List.Item>
+          </List>
         </Text>
       </DemoHeader>
 
@@ -53,7 +58,7 @@ export const OverflowTabsDemo = () => {
               onTabChange={setValue}
               tabs={dummyArray.map((_, index) => ({
                 value: `${index}`,
-                label: `Tab ${index}`,
+                label: `Tab ${index === 7 ? "longer text-longer text-longer text" : index}`,
                 rightSection: index === 0 ? <IconBrandAmongus /> : undefined,
               }))}
             />

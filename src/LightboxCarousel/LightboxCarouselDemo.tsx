@@ -1,5 +1,6 @@
-import { Badge, Box, Card, CSSObject, Divider, Flex, Group, Text, Title } from "@mantine/core";
+import { Box, Card, CSSObject, Divider, Flex, Group, Text, Title } from "@mantine/core";
 import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
+import { ProgressHoverCard } from "../core/ProgressBadge";
 import { LightboxCarousel } from "./LightboxCarousel";
 
 const sources = [
@@ -22,7 +23,7 @@ export const LightboxCarouselDemo = () => {
     <Box>
       <DemoHeader>
         <Box>
-          <Badge color="lime">Functional</Badge>
+          <ProgressHoverCard stage="2" />
         </Box>
 
         <Group position="apart" align="flex-end">

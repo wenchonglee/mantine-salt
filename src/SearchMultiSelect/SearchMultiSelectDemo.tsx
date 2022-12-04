@@ -1,6 +1,7 @@
-import { Badge, Box, Card, Code, Divider, Group, SelectItem, Text, Title } from "@mantine/core";
+import { Box, Card, Code, Divider, Group, SelectItem, Text, Title } from "@mantine/core";
 import { useState } from "react";
 import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
+import { ProgressHoverCard } from "../core/ProgressBadge";
 import { SearchMultiSelect } from "./SearchMultiSelect";
 
 export const SearchMultiSelectDemo = () => {
@@ -29,7 +30,7 @@ export const SearchMultiSelectDemo = () => {
     <Box>
       <DemoHeader>
         <Box>
-          <Badge color="red">Work in progress</Badge>
+          <ProgressHoverCard stage="1" />
         </Box>
 
         <Group position="apart" align="flex-end">
