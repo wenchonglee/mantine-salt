@@ -11,10 +11,10 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import {
+  IconBooks,
   IconChevronLeft,
   IconChevronRight,
   IconInputSearch,
-  IconMicroscope,
   IconMoodEmpty,
   IconPhotoUp,
   IconRowInsertBottom,
@@ -151,6 +151,11 @@ const navs = [
     links: [
       { label: "Overflow Box", link: Routes.OverflowBox },
       { label: "Overflow Tabs", link: Routes.OverflowTabs2 },
+      {
+        label: "Lightbox Carousel",
+        icon: IconPhotoUp,
+        link: Routes.LightboxCarousel,
+      },
     ],
   },
   {
@@ -163,15 +168,11 @@ const navs = [
     ],
   },
   {
-    label: "Experimental",
-    icon: IconMicroscope,
+    label: "Other libraries",
+    icon: IconBooks,
     initiallyOpened: true,
     links: [
-      {
-        label: "Lightbox Carousel",
-        icon: IconPhotoUp,
-        link: Routes.LightboxCarousel,
-      },
+      { label: "Virtuoso + Infinite Query", link: Routes.VirtuosoInfiniteQuery },
       { label: "Ag-grid Themed Table", link: Routes.MantineAgGrid },
     ],
   },

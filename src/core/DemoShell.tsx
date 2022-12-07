@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 
 type DemoShellProps = {
   header: string | ReactNode;
-  description?: string;
+  description?: ReactNode;
   children: ReactNode;
   snippet?: string;
 };

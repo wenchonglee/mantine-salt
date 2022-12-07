@@ -14,6 +14,7 @@ import {
 } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import { IconBrandGithub, IconSalt } from "@tabler/icons";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link, Outlet, ReactLocation, Route, Router } from "react-location";
 import { Home, Routes, SegmentedToggle } from "./core";
@@ -25,8 +26,10 @@ import { OverflowTabsDemo } from "./OverflowTabs";
 import { ScrollableTabsDemo } from "./ScrollableTabs/ScrollableTabsDemo";
 import { SearchMultiSelectDemo } from "./SearchMultiSelect";
 import { TruncatedTextDemo } from "./TruncatedText/TruncatedTextDemo";
+import { VirtuosoInfiniteQueryDemo } from "./VirtuosoInfiniteQuery/VirtuosoInfiniteQueryDemo";
 
 const location = new ReactLocation();
+const queryClient = new QueryClient();
 
 const routes: Route[] = [
   { path: Routes.Home, element: <Home /> },
@@ -37,6 +40,7 @@ const routes: Route[] = [
   { path: Routes.LightboxCarousel, element: <LightboxCarouselDemo /> },
   { path: Routes.MantineAgGrid, element: <MantineAgGridDemo /> },
   { path: Routes.SearchMultiSelect, element: <SearchMultiSelectDemo /> },
+  { path: Routes.VirtuosoInfiniteQuery, element: <VirtuosoInfiniteQueryDemo /> },
   {
     path: "*",
     element: (
@@ -60,6 +64,7 @@ function App() {
   const [opened, setOpened] = useState(false);
 
   return (
+    <QueryClientProvider client={queryClient}>
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider
         withCSSVariables
@@ -122,6 +127,7 @@ function App() {
         </Router>
       </MantineProvider>
     </ColorSchemeProvider>
+    </QueryClientProvider>
   );
 }
 

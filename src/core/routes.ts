@@ -6,5 +6,6 @@ export enum Routes {
   OverflowTabs2 = "/overflow-tabs-2",
   LightboxCarousel = "/lightbox-carousel",
   MantineAgGrid = "/mantine-ag-grid",
+  VirtuosoInfiniteQuery = "/virtuoso-infinite-query",
   SearchMultiSelect = "/search-multi-select",
 }
