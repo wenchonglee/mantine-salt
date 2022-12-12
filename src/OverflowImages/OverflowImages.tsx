@@ -26,9 +26,9 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-type LightboxCarouselStylesNames = Selectors<typeof useStyles>;
+type OverflowImagesStylesNames = Selectors<typeof useStyles>;
 
-interface LightboxCarouselProps extends DefaultProps<LightboxCarouselStylesNames> {
+interface OverflowImagesProps extends DefaultProps<OverflowImagesStylesNames> {
   imageSrc: string[];
   imageWidth?: ImageProps["width"];
   debounceWait?: number;
@@ -43,7 +43,7 @@ const IMAGE_WIDTH = 200;
 /** Default debounce wait time (ms) */
 const DEBOUNCE_WAIT = 50;
 
-export const LightboxCarousel = (props: LightboxCarouselProps) => {
+export const OverflowImages = (props: OverflowImagesProps) => {
   const {
     className,
     classNames,
@@ -55,7 +55,7 @@ export const LightboxCarousel = (props: LightboxCarouselProps) => {
   } = props;
 
   const { classes, cx, theme } = useStyles(undefined, {
-    name: "LightboxCarousel",
+    name: "OverflowImages",
     classNames,
     styles,
     unstyled,

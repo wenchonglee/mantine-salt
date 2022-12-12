@@ -150,9 +150,9 @@ const navs = [
       { label: "Overflow Box", link: Routes.OverflowBox },
       { label: "Overflow Tabs", link: Routes.OverflowTabs2 },
       {
-        label: "Lightbox Carousel",
+        label: "Overflow Images",
         icon: IconPhotoUp,
-        link: Routes.LightboxCarousel,
+        link: Routes.OverflowImages,
       },
     ],
   },

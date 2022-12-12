@@ -1,7 +1,7 @@
 import { Box, Card, CSSObject, Divider, Flex, Group, Text, Title } from "@mantine/core";
 import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
 import { ProgressHoverCard } from "../core/ProgressBadge";
-import { LightboxCarousel } from "./LightboxCarousel";
+import { OverflowImages } from "./OverflowImages";
 
 const sources = [
   "https://avatars.githubusercontent.com/u/18256786?v=4",
@@ -18,7 +18,7 @@ const cardStyles: CSSObject = {
   resize: "horizontal",
 };
 
-export const LightboxCarouselDemo = () => {
+export const OverflowImagesDemo = () => {
   return (
     <Box>
       <DemoHeader>
@@ -27,11 +27,11 @@ export const LightboxCarouselDemo = () => {
         </Box>
 
         <Group position="apart" align="flex-end">
-          <Title>Lightbox Carousel</Title>
+          <Title>Overflow Images</Title>
 
           <Source
-            componentLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/LightboxCarousel/LightboxCarousel.tsx"
-            demoLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/LightboxCarousel/LightboxCarouselDemo.tsx"
+            componentLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/OverflowImages/OverflowImages.tsx"
+            demoLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/OverflowImages/OverflowImagesDemo.tsx"
           />
         </Group>
 
@@ -46,7 +46,7 @@ export const LightboxCarouselDemo = () => {
       <DemoContent>
         <DemoShell header="Default" snippet={snippetA}>
           <Card w="100%" withBorder sx={cardStyles}>
-            <LightboxCarousel imageSrc={sources} />
+            <OverflowImages imageSrc={sources} />
           </Card>
         </DemoShell>
 
@@ -55,7 +55,7 @@ export const LightboxCarouselDemo = () => {
           description="If the space can accommodate all images, then no controls are rendered"
         >
           <Card w="100%">
-            <LightboxCarousel imageSrc={sources.slice(0, 2)} />
+            <OverflowImages imageSrc={sources.slice(0, 2)} />
           </Card>
         </DemoShell>
 
@@ -65,7 +65,7 @@ export const LightboxCarouselDemo = () => {
           snippet={snippetC}
         >
           <Card w="100%" withBorder sx={cardStyles}>
-            <LightboxCarousel imageSrc={sources} imageWidth={100} debounceWait={0} />
+            <OverflowImages imageSrc={sources} imageWidth={100} debounceWait={0} />
           </Card>
         </DemoShell>
 
@@ -81,7 +81,7 @@ export const LightboxCarouselDemo = () => {
 
             <Flex>
               <Box>
-                <LightboxCarousel imageSrc={sources} />
+                <OverflowImages imageSrc={sources} />
               </Box>
             </Flex>
             <Divider my="md" mx="-md" />
@@ -91,7 +91,7 @@ export const LightboxCarouselDemo = () => {
             </Text>
             <Flex>
               <Box miw={0}>
-                <LightboxCarousel imageSrc={sources} />
+                <OverflowImages imageSrc={sources} />
               </Box>
             </Flex>
           </Card>
@@ -112,17 +112,17 @@ const sources = [
   "https://images.unsplash.com/photo-1668259678563-95f9a18e2323?w=687&q=80",
 ];
 //...
-<LightboxCarousel imageSrc={sources} />
+<OverflowImages imageSrc={sources} />
 `;
 
 const snippetC = `
-<LightboxCarousel imageSrc={sources} imageWidth={100} debounceWait={0} />
+<OverflowImages imageSrc={sources} imageWidth={100} debounceWait={0} />
 `;
 
 const snippetD = `
 <Flex>
   <Box>
-    <LightboxCarousel imageSrc={sources} />
+    <OverflowImages imageSrc={sources} />
   </Box>
 </Flex>
 
@@ -130,7 +130,7 @@ const snippetD = `
 
 <Flex>
   <Box miw={0}>
-    <LightboxCarousel imageSrc={sources} />
+    <OverflowImages imageSrc={sources} />
   </Box>
 </Flex>
 `;

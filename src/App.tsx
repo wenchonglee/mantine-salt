@@ -19,9 +19,9 @@ import { useState } from "react";
 import { Link, Outlet, ReactLocation, Route, Router } from "react-location";
 import { Home, Routes, SegmentedToggle } from "./core";
 import { Navbar } from "./core/Navbar";
-import { LightboxCarouselDemo } from "./LightboxCarousel";
 import { MantineAgGridDemo } from "./MantineAgGrid";
 import { OverflowBoxDemo } from "./OverflowBox/OverflowBoxDemo";
+import { OverflowImagesDemo } from "./OverflowImages";
 import { OverflowTabsDemo } from "./OverflowTabs";
 import { ScrollableTabsDemo } from "./ScrollableTabs/ScrollableTabsDemo";
 import { SearchMultiSelectDemo } from "./SearchMultiSelect";
@@ -37,7 +37,7 @@ const routes: Route[] = [
   { path: Routes.TruncatedText, element: <TruncatedTextDemo /> },
   { path: Routes.ScrollableTabs, element: <ScrollableTabsDemo /> },
   { path: Routes.OverflowTabs2, element: <OverflowTabsDemo /> },
-  { path: Routes.LightboxCarousel, element: <LightboxCarouselDemo /> },
+  { path: Routes.OverflowImages, element: <OverflowImagesDemo /> },
   { path: Routes.MantineAgGrid, element: <MantineAgGridDemo /> },
   { path: Routes.SearchMultiSelect, element: <SearchMultiSelectDemo /> },
   { path: Routes.VirtuosoInfiniteQuery, element: <VirtuosoInfiniteQueryDemo /> },
