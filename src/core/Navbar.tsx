@@ -114,30 +114,28 @@ export function LinksGroup({
 
   return (
     <>
-      <Link to={link} style={{ textDecoration: "none" }}>
-        <UnstyledButton onClick={() => setOpened((o) => !o)} className={classes.control}>
-          <Group position="apart" spacing={0}>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <ThemeIcon variant="light" size={30} color={iconColor}>
-                <Icon size={18} />
-              </ThemeIcon>
-              <Text ml="md" color={isDimmed ? "dimmed" : undefined}>
-                {label}
-              </Text>
-            </Box>
-            {hasLinks && (
-              <ChevronIcon
-                className={classes.chevron}
-                size={14}
-                stroke={1.5}
-                style={{
-                  transform: opened ? `rotate(${theme.dir === "rtl" ? -90 : 90}deg)` : "none",
-                }}
-              />
-            )}
-          </Group>
-        </UnstyledButton>
-      </Link>
+      <UnstyledButton onClick={() => setOpened((o) => !o)} className={classes.control}>
+        <Group position="apart" spacing={0}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <ThemeIcon variant="light" size={30} color={iconColor}>
+              <Icon size={18} />
+            </ThemeIcon>
+            <Text ml="md" color={isDimmed ? "dimmed" : undefined}>
+              {label}
+            </Text>
+          </Box>
+          {hasLinks && (
+            <ChevronIcon
+              className={classes.chevron}
+              size={14}
+              stroke={1.5}
+              style={{
+                transform: opened ? `rotate(${theme.dir === "rtl" ? -90 : 90}deg)` : "none",
+              }}
+            />
+          )}
+        </Group>
+      </UnstyledButton>
       {hasLinks ? <Collapse in={opened}>{items}</Collapse> : null}
     </>
   );
@@ -164,7 +162,7 @@ const navs = [
     initiallyOpened: true,
     links: [
       { label: "Search MultiSelect", link: Routes.SearchMultiSelect },
-      { label: "Tree Dropdown", link: "/not-found" },
+      // { label: "Tree Dropdown", link: "/not-found" },
     ],
   },
   {
@@ -181,7 +179,7 @@ const navs = [
     icon: IconMoodEmpty,
     iconColor: "orange",
     isDimmed: true,
-    initiallyOpened: true,
+    // initiallyOpened: true,
     links: [
       { label: "Truncated Text", link: Routes.TruncatedText },
       { label: "Scrollable Tabs", link: Routes.ScrollableTabs },
