@@ -52,7 +52,7 @@ export const OverflowImagesDemo = () => {
 
         <DemoShell
           header="Fewer items"
-          description="If the space can accommodate all images, then no controls are rendered"
+          description="If the space can accommodate all images, then no overlay is rendered"
         >
           <Card w="100%">
             <OverflowImages imageSrc={sources.slice(0, 2)} />

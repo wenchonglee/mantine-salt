@@ -25,7 +25,11 @@ export const MantineAgGridDemo = () => {
           />
         </Group>
 
-        <Text>TBD</Text>
+        <Text>
+          May not be pursued.
+          <br />
+          Ag Grid can reference mantine styles via <code>Global Styles</code>, but the tricky part is converting icons
+        </Text>
       </DemoHeader>
 
       <DemoContent>

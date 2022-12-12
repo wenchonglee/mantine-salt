@@ -1,4 +1,18 @@
-import { Anchor, Box, Button, Card, Code, CSSObject, Group, HoverCard, List, Text, Title } from "@mantine/core";
+import {
+  Anchor,
+  Box,
+  Button,
+  Card,
+  Code,
+  CSSObject,
+  Divider,
+  Flex,
+  Group,
+  HoverCard,
+  List,
+  Text,
+  Title,
+} from "@mantine/core";
 import { IconBrandAmongus } from "@tabler/icons";
 import { useState } from "react";
 import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
@@ -114,6 +128,47 @@ export const OverflowTabsDemo = () => {
                 </HoverCard>
               )}
             />
+          </Card>
+        </DemoShell>
+
+        <DemoShell
+          header="Grid/Flex parents"
+          description="When the parent element is a flex or grid, you will need to add min-width: 0"
+        >
+          <Card w="500px" withBorder sx={cardStyles}>
+            <Text italic size="xs">
+              without <code>min-width: 0</code>, doesn't work correctly
+            </Text>
+
+            <Flex>
+              <Box sx={{ flexGrow: 1 }}>
+                <OverflowTabs
+                  value={value}
+                  onTabChange={setValue}
+                  tabs={dummyArray.map((_, index) => ({
+                    value: `${index}`,
+                    label: `Tab ${index === 7 ? "longer text-longer text-longer text" : index}`,
+                  }))}
+                />
+              </Box>
+            </Flex>
+            <Divider my="md" mx="-md" />
+
+            <Text italic size="xs">
+              with <code>min-width: 0</code>
+            </Text>
+            <Flex>
+              <Box miw={0} sx={{ flexGrow: 1 }}>
+                <OverflowTabs
+                  value={value}
+                  onTabChange={setValue}
+                  tabs={dummyArray.map((_, index) => ({
+                    value: `${index}`,
+                    label: `Tab ${index === 7 ? "longer text-longer text-longer text" : index}`,
+                  }))}
+                />
+              </Box>
+            </Flex>
           </Card>
         </DemoShell>
       </DemoContent>

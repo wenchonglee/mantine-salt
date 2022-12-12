@@ -36,6 +36,7 @@ export const VirtuosoInfiniteQueryDemo = () => {
               Virtuoso uses <code>customScrollParent</code> to work with <code>ScrollArea</code>
             </>
           }
+          snippet={snippetA}
         >
           <VirtuosoInfiniteQuery />
         </DemoShell>
@@ -43,3 +44,70 @@ export const VirtuosoInfiniteQueryDemo = () => {
     </Box>
   );
 };
+
+const snippetA = `
+const VirtuosoInfiniteQuery = () => {
+  const { status, data, isFetching, fetchNextPage, hasNextPage } = useMockInfiniteQuery();
+  const [scrollParent, setScrollParent] = useState<HTMLDivElement | null>(null);
+
+  return (
+    <Box w="100%">
+      {/* redacted */}
+
+      {status === "loading" ? (
+        <Stack spacing="xs">
+          <Skeleton height="16px" w="100%" />
+          <Skeleton height="16px" w="100%" />
+          <Skeleton height="16px" w="80%" />
+        </Stack>
+      ) : status === "error" ? (
+        <Text color="red"> Error </Text>
+      ) : (
+        <ScrollArea
+          sx={{ height: "300px" }}
+          viewportRef={setScrollParent}
+        >
+          <Virtuoso
+            customScrollParent={scrollParent ?? undefined}
+            data={data?.pages.map((page) => page.data).flat()}
+            endReached={() => {
+              if (hasNextPage) {
+                fetchNextPage();
+              }
+            }}
+            overscan={1000}
+            components={{
+              Footer: () =>
+                hasNextPage ? (
+                  <Stack spacing="xs">
+                    <Skeleton height="16px" w="100%" />
+                    <Skeleton height="16px" w="100%" />
+                    <Skeleton height="16px" w="80%" />
+                  </Stack>
+                ) : (
+                  <Text>No more results</Text>
+                ),
+            }}
+            itemContent={(index, user) => {
+              return (
+                <Card withBorder mb="md">
+                  <Text>
+                    {user.name}
+                    <br />
+                    {user.text}
+                    {index % 2 ? (
+                      <>
+                        <br /> random block
+                      </>
+                    ) : null}
+                  </Text>
+                </Card>
+              );
+            }}
+          />
+        </ScrollArea>
+      )}
+    </Box>
+  );
+};
+`;
