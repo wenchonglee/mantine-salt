@@ -1,18 +1,4 @@
-import {
-  Anchor,
-  Box,
-  Button,
-  Card,
-  Code,
-  CSSObject,
-  Divider,
-  Flex,
-  Group,
-  HoverCard,
-  List,
-  Text,
-  Title,
-} from "@mantine/core";
+import { Anchor, Box, Button, Card, Code, CSSObject, Group, HoverCard, List, Text, Title } from "@mantine/core";
 import { IconBrandAmongus } from "@tabler/icons";
 import { useState } from "react";
 import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
@@ -73,7 +59,7 @@ export const OverflowTabsDemo = () => {
               tabs={dummyArray.map((_, index) => ({
                 value: `${index}`,
                 label: `Tab ${index === 7 ? "longer text-longer text-longer text" : index}`,
-                rightSection: index === 0 ? <IconBrandAmongus /> : undefined,
+                icon: !(index % 8) ? <IconBrandAmongus /> : undefined,
               }))}
             />
           </Card>
@@ -96,27 +82,28 @@ export const OverflowTabsDemo = () => {
         >
           <Card withBorder sx={cardStyles}>
             <OverflowTabs
+              value={value}
+              onTabChange={setValue}
               tabs={dummyArray.map((_, index) => ({
                 value: `${index}`,
                 label: `Tab ${index}`,
               }))}
               defaultValue="2"
               debounceWait={0}
-              overflowBuffer={80}
-              overflowComponent={(tabs, selectedTab, onTabChange) => (
+              overflowComponent={({ overflownTabs, selectedTab, setSelectedTab, overflowMenuRef }) => (
                 <HoverCard withinPortal>
                   <HoverCard.Target>
-                    <Button compact variant="subtle">
+                    <Button compact variant="subtle" ref={overflowMenuRef}>
                       Show More
                     </Button>
                   </HoverCard.Target>
 
                   <HoverCard.Dropdown>
                     <Button.Group orientation="vertical">
-                      {tabs.map((tab) => (
+                      {overflownTabs.map((tab) => (
                         <Button
                           key={tab.value}
-                          onClick={() => onTabChange(tab.value)}
+                          onClick={() => setSelectedTab(tab.value)}
                           color={selectedTab === tab.value ? "blue" : "gray"}
                           variant="subtle"
                         >
@@ -130,7 +117,7 @@ export const OverflowTabsDemo = () => {
             />
           </Card>
         </DemoShell>
-
+        {/* 
         <DemoShell
           header="Grid/Flex parents"
           description="When the parent element is a flex or grid, you will need to add min-width: 0"
@@ -140,37 +127,42 @@ export const OverflowTabsDemo = () => {
               without <code>min-width: 0</code>, doesn't work correctly
             </Text>
 
-            <Flex>
-              <Box sx={{ flexGrow: 1 }}>
-                <OverflowTabs
-                  value={value}
-                  onTabChange={setValue}
-                  tabs={dummyArray.map((_, index) => ({
-                    value: `${index}`,
-                    label: `Tab ${index === 7 ? "longer text-longer text-longer text" : index}`,
-                  }))}
-                />
-              </Box>
-            </Flex>
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, 1fr)",
+                gap: "10px",
+                gridAutoRows: "minmax(100px, auto)",
+              }}
+            >
+              <Box sx={{ gridColumn: "2 / 4", gridRow: "1 / 3" }}>testb</Box>
+              <OverflowTabs
+                value={value}
+                onTabChange={setValue}
+                tabs={dummyArray.map((_, index) => ({
+                  value: `${index}`,
+                  label: `Tab ${index === 7 ? "longer text-longer text-longer text" : index}`,
+                }))}
+              />
+              <Box sx={{ gridColumn: "1 / 3", gridRow: "1 / 2" }}>test</Box>
+            </Box>
             <Divider my="md" mx="-md" />
 
             <Text italic size="xs">
               with <code>min-width: 0</code>
             </Text>
             <Flex>
-              <Box miw={0} sx={{ flexGrow: 1 }}>
-                <OverflowTabs
-                  value={value}
-                  onTabChange={setValue}
-                  tabs={dummyArray.map((_, index) => ({
-                    value: `${index}`,
-                    label: `Tab ${index === 7 ? "longer text-longer text-longer text" : index}`,
-                  }))}
-                />
-              </Box>
+              <OverflowTabs
+                value={value}
+                onTabChange={setValue}
+                tabs={dummyArray.map((_, index) => ({
+                  value: `${index}`,
+                  label: `Tab ${index === 7 ? "longer text-longer text-longer text" : index}`,
+                }))}
+              />
             </Flex>
           </Card>
-        </DemoShell>
+        </DemoShell> */}
       </DemoContent>
     </Box>
   );
