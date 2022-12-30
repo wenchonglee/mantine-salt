@@ -1,4 +1,4 @@
-import { Box, Card, CSSObject, Divider, Flex, Group, Text, Title } from "@mantine/core";
+import { Box, Card, CSSObject, Group, Text, Title } from "@mantine/core";
 import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
 import { ProgressHoverCard } from "../core/ProgressBadge";
 import { OverflowImages } from "./OverflowImages";
@@ -69,7 +69,7 @@ export const OverflowImagesDemo = () => {
           </Card>
         </DemoShell>
 
-        <DemoShell
+        {/* <DemoShell
           header="Grid/Flex parents"
           description="When the parent element is a flex or grid, you will need to add min-width: 0"
           snippet={snippetD}
@@ -80,9 +80,7 @@ export const OverflowImagesDemo = () => {
             </Text>
 
             <Flex>
-              <Box>
-                <OverflowImages imageSrc={sources} />
-              </Box>
+              <OverflowImages imageSrc={sources} />
             </Flex>
             <Divider my="md" mx="-md" />
 
@@ -95,7 +93,7 @@ export const OverflowImagesDemo = () => {
               </Box>
             </Flex>
           </Card>
-        </DemoShell>
+        </DemoShell> */}
       </DemoContent>
     </Box>
   );

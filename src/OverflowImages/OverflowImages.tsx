@@ -1,10 +1,14 @@
-import { Box, createStyles, DefaultProps, Group, Image, ImageProps, Selectors } from "@mantine/core";
+import { Box, createStyles, DefaultProps, Group, Image, Selectors } from "@mantine/core";
 import { debounce } from "lodash";
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { ModalCarousel } from "./ModalCarousel";
 
 const useStyles = createStyles((theme) => ({
   root: {
+    flexGrow: 1,
+    minWidth: 0,
+  },
+  imageList: {
     overflow: "hidden",
   },
   imageContainer: {
@@ -30,12 +34,9 @@ type OverflowImagesStylesNames = Selectors<typeof useStyles>;
 
 interface OverflowImagesProps extends DefaultProps<OverflowImagesStylesNames> {
   imageSrc: string[];
-  imageWidth?: ImageProps["width"];
+  imageWidth?: number;
   debounceWait?: number;
 }
-
-/** Arbitrary buffer so that overflow is detected "ahead of time" */
-const BUFFER = 24;
 
 /** Default image width */
 const IMAGE_WIDTH = 200;
@@ -65,7 +66,6 @@ export const OverflowImages = (props: OverflowImagesProps) => {
   const [selectedSrc, setSelectedSrc] = useState<string>();
 
   const ref = useRef<HTMLDivElement>(null);
-  const allRef = useRef<(HTMLDivElement | null)[]>([]);
   const frameID = useRef<number>(0);
 
   const [overflownIndex, setOverflownIndex] = useState(Infinity);
@@ -105,18 +105,15 @@ export const OverflowImages = (props: OverflowImagesProps) => {
 
   const findOverflownIndex = debounce(
     () => {
-      if (ref.current && allRef.current) {
-        let availableWidth = ref.current.clientWidth - BUFFER;
+      if (ref.current) {
+        let availableWidth = ref.current.clientWidth;
 
-        for (let i = 0; i < allRef.current.length; i++) {
-          const tabRef = allRef.current[i];
-          if (tabRef) {
-            // also account for the gap size of Group (theme.spacing.md)
-            availableWidth -= tabRef.clientWidth + theme.spacing.md;
-            if (availableWidth <= 0) {
-              setOverflownIndex(i);
-              return;
-            }
+        for (let i = 0; i < imageSrc.length; i++) {
+          // also account for the gap size of Group (theme.spacing.md)
+          availableWidth -= imageWidth + theme.spacing.md;
+          if (availableWidth <= 0) {
+            setOverflownIndex(i);
+            return;
           }
         }
         setOverflownIndex(Infinity);
@@ -133,34 +130,31 @@ export const OverflowImages = (props: OverflowImagesProps) => {
 
   return (
     <>
-      <Group ref={ref} className={cx(classes.root, className)} noWrap>
-        {imageSrc.map((src, index) => (
-          <Box
-            key={index}
-            ref={(element: HTMLDivElement | null) => (allRef.current[index] = element)}
-            className={classes.imageContainer}
-            onClick={() => onChangeImage(src)}
-          >
-            {overflownIndex !== Infinity && index === overflownIndex - 1 && (
-              <Box className={classes.imageOverlay}>+{imageSrc.length - overflownIndex}</Box>
-            )}
+      <Box className={cx(classes.root, className)}>
+        <Group ref={ref} className={classes.imageList} noWrap>
+          {imageSrc.map((src, index) => (
+            <Box key={index} className={classes.imageContainer} onClick={() => onChangeImage(src)}>
+              {overflownIndex !== Infinity && index === overflownIndex - 1 && (
+                <Box className={classes.imageOverlay}>+{imageSrc.length - overflownIndex}</Box>
+              )}
 
-            <Image
-              fit="cover"
-              radius="md"
-              src={src}
-              width={imageWidth}
-              style={{
-                visibility: index >= overflownIndex ? "hidden" : "visible",
-                filter: overflownIndex !== Infinity && index === overflownIndex - 1 ? "brightness(20%)" : undefined,
-              }}
-              styles={{
-                image: { aspectRatio: "1" },
-              }}
-            />
-          </Box>
-        ))}
-      </Group>
+              <Image
+                fit="cover"
+                radius="md"
+                src={src}
+                width={imageWidth}
+                style={{
+                  visibility: index >= overflownIndex ? "hidden" : "visible",
+                  filter: overflownIndex !== Infinity && index === overflownIndex - 1 ? "brightness(20%)" : undefined,
+                }}
+                styles={{
+                  image: { aspectRatio: "1" },
+                }}
+              />
+            </Box>
+          ))}
+        </Group>
+      </Box>
 
       <ModalCarousel
         isModalOpen={isModalOpen}
