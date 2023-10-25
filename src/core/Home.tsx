@@ -1,6 +1,5 @@
 import { Alert, Anchor, Box, Text, Title } from "@mantine/core";
 import { DemoContent } from "./DemoShell";
-import { ProgressDetails } from "./ProgressBadge";
 
 export const Home = () => {
   return (
