@@ -43,6 +43,7 @@ export const OverflowTabs = (props: OverflowTabsProps) => {
   const frameID = useRef<number>(0);
   const [overflownIndex, setOverflownIndex] = useState(Infinity);
   const [selectedTab, setSelectedTab] = useUncontrolled({ value, onChange: onTabChange, defaultValue });
+  const [right, setRight] = useState(0);
 
   const { classes, cx } = useStyles(undefined, {
     name: "OverflowTabs",
@@ -57,17 +58,21 @@ export const OverflowTabs = (props: OverflowTabsProps) => {
       if (overflowMenuRef.current) {
         availableWidth -= overflowMenuRef.current.clientWidth;
       }
+      let nextWidth = 0;
 
       for (let i = 0; i < tabRefs.current.length; i++) {
         const tabRef = tabRefs.current[i];
         if (tabRef) {
+          nextWidth += tabRef.clientWidth;
           availableWidth -= tabRef.clientWidth;
           if (availableWidth <= 0) {
             setOverflownIndex(i);
+            setRight(nextWidth - tabRef.clientWidth);
             return;
           }
         }
       }
+      setRight(0);
       setOverflownIndex(tabRefs.current.length);
     }
   };
@@ -154,7 +159,14 @@ export const OverflowTabs = (props: OverflowTabsProps) => {
             })}
           </Tabs.List>
 
-          <Box className={classes.overflowTabContainer}>{renderOverflow()}</Box>
+          <Box
+            className={classes.overflowTabContainer}
+            sx={{
+              left: right,
+            }}
+          >
+            {renderOverflow()}
+          </Box>
         </div>
       </Tabs>
     </Box>

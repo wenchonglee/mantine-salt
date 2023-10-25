@@ -21,7 +21,7 @@ export const useStyles = createStyles((_theme) => ({
   tab: {},
   overflowTabContainer: {
     position: "absolute",
-    right: 0,
+    // right: 0,
     height: "100%",
   },
 }));

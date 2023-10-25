@@ -14,7 +14,6 @@ import {
   IconBooks,
   IconChevronLeft,
   IconChevronRight,
-  IconInputSearch,
   IconMoodEmpty,
   IconPhotoUp,
   IconRowInsertBottom,
@@ -157,29 +156,16 @@ const navs = [
     ],
   },
   {
-    label: "Inputs",
-    icon: IconInputSearch,
-    initiallyOpened: true,
-    links: [
-      { label: "Search MultiSelect", link: Routes.SearchMultiSelect },
-      // { label: "Tree Dropdown", link: "/not-found" },
-    ],
-  },
-  {
     label: "Other libraries",
     icon: IconBooks,
     initiallyOpened: true,
-    links: [
-      { label: "Virtuoso + Infinite Query", link: Routes.VirtuosoInfiniteQuery },
-      { label: "Ag-grid Themed Table", link: Routes.MantineAgGrid },
-    ],
+    links: [{ label: "Virtuoso + Infinite Query", link: Routes.VirtuosoInfiniteQuery }],
   },
   {
-    label: "Abandoned",
+    label: "Archived/abandoned",
     icon: IconMoodEmpty,
     iconColor: "orange",
     isDimmed: true,
-    // initiallyOpened: true,
     links: [
       { label: "Truncated Text", link: Routes.TruncatedText },
       { label: "Scrollable Tabs", link: Routes.ScrollableTabs },
