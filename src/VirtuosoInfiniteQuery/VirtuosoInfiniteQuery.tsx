@@ -18,8 +18,8 @@ export const VirtuosoInfiniteQuery = () => {
 
       <Space h="xl" />
 
-      {status === "loading" ? (
-        <Stack spacing="xs">
+      {status === "pending" ? (
+        <Stack gap="xs">
           <Skeleton height="16px" w="100%" />
           <Skeleton height="16px" w="100%" />
           <Skeleton height="16px" w="80%" />
@@ -28,7 +28,7 @@ export const VirtuosoInfiniteQuery = () => {
         <Text color="red"> Error </Text>
       ) : (
         <ScrollArea
-          sx={{
+          style={{
             height: "300px",
           }}
           viewportRef={setScrollParent}
@@ -45,7 +45,7 @@ export const VirtuosoInfiniteQuery = () => {
             components={{
               Footer: () =>
                 hasNextPage ? (
-                  <Stack spacing="xs">
+                  <Stack gap="xs">
                     <Skeleton height="16px" w="100%" />
                     <Skeleton height="16px" w="100%" />
                     <Skeleton height="16px" w="80%" />

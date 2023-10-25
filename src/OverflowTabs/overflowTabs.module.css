@@ -1,0 +1,23 @@
+.root {
+  flex-grow: 1;
+  /** necessary if the parent is a flexbox */
+  min-width: 0;
+}
+
+.wrapper {
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.tabsList {
+  flex-wrap: unset;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.overflowTabContainer {
+  position: absolute;
+  height: 100%;
+}

@@ -1,15 +1,13 @@
-import { Box, DefaultProps, TabProps, Tabs, TabsProps } from "@mantine/core";
+import { Box, Tabs, TabsProps, TabsTabProps } from "@mantine/core";
 import { useUncontrolled } from "@mantine/hooks";
 import { debounce } from "lodash";
 import { ReactNode, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { OverflowMenu, OverflowMenuProps } from "./OverflowMenu/OverflowMenu";
-import { OverflowTabsStylesNames, useStyles } from "./OverflowTabs.styles";
+import * as classes from "./overflowTabs.module.css";
 
-type OverflowTab = Omit<TabProps, "children"> & { label: string };
+type OverflowTab = Omit<TabsTabProps, "children"> & { label: string };
 
-interface OverflowTabsProps
-  extends Omit<TabsProps, keyof DefaultProps | "orientation" | "children" | "variant">,
-    DefaultProps<OverflowTabsStylesNames> {
+interface OverflowTabsProps extends Omit<TabsProps, "orientation" | "children" | "variant"> {
   /** Equivalent to Mantine Tabs.Tab component */
   tabs: OverflowTab[];
 
@@ -23,34 +21,15 @@ interface OverflowTabsProps
 const DEBOUNCE_WAIT = 50;
 
 export const OverflowTabs = (props: OverflowTabsProps) => {
-  const {
-    className,
-    classNames,
-    styles,
-    unstyled,
-    tabs,
-    value,
-    onTabChange,
-    defaultValue,
-    debounceWait = DEBOUNCE_WAIT,
-    overflowComponent,
-    ...others
-  } = props;
+  const { tabs, value, onChange, defaultValue, debounceWait = DEBOUNCE_WAIT, overflowComponent, ...others } = props;
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const overflowMenuRef = useRef<HTMLButtonElement>(null);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const frameID = useRef<number>(0);
   const [overflownIndex, setOverflownIndex] = useState(Infinity);
-  const [selectedTab, setSelectedTab] = useUncontrolled({ value, onChange: onTabChange, defaultValue });
+  const [selectedTab, setSelectedTab] = useUncontrolled({ value, onChange, defaultValue });
   const [right, setRight] = useState(0);
-
-  const { classes, cx } = useStyles(undefined, {
-    name: "OverflowTabs",
-    classNames,
-    styles,
-    unstyled,
-  });
 
   const findOverflownIndex = () => {
     if (wrapperRef.current && tabRefs.current) {
@@ -138,8 +117,8 @@ export const OverflowTabs = (props: OverflowTabsProps) => {
   };
 
   return (
-    <Box className={cx(classes.root, className)}>
-      <Tabs className={classes.tabs} {...others} value={selectedTab} onTabChange={setSelectedTab}>
+    <Box className={classes.root}>
+      <Tabs {...others} value={selectedTab} onChange={setSelectedTab}>
         <div className={classes.wrapper} ref={wrapperRef}>
           <Tabs.List className={classes.tabsList}>
             {tabs.map((tab, index) => {
@@ -149,8 +128,7 @@ export const OverflowTabs = (props: OverflowTabsProps) => {
                 <Tabs.Tab
                   key={index}
                   ref={(element) => (tabRefs.current[index] = element)}
-                  sx={{ visibility: index >= overflownIndex ? "hidden" : "visible" }}
-                  className={classes.tab}
+                  style={{ visibility: index >= overflownIndex ? "hidden" : "visible" }}
                   {...otherTabProps}
                 >
                   {tab.label}
@@ -161,7 +139,7 @@ export const OverflowTabs = (props: OverflowTabsProps) => {
 
           <Box
             className={classes.overflowTabContainer}
-            sx={{
+            style={{
               left: right,
             }}
           >

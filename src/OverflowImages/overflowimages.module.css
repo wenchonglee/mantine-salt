@@ -1,0 +1,28 @@
+.root {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.imageList {
+  overflow: hidden;
+}
+
+.imageContainer {
+  position: relative;
+  transition: filter 250ms ease;
+}
+
+.imageContainer:hover {
+  cursor: pointer;
+  filter: brightness(80%);
+}
+
+.imageOverlay {
+  font-size: var(--mantine-font-size-xl);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  color: white;
+}

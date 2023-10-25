@@ -1,0 +1,13 @@
+.image {
+  overflow: auto;
+  margin: 0 auto;
+  cursor: default;
+}
+
+.contain:hover {
+  cursor: zoom-in;
+}
+
+.full:hover {
+  cursor: zoom-out;
+}

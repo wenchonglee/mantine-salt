@@ -1,4 +1,4 @@
-import { Alert, Box, Text, Title } from "@mantine/core";
+import { Alert, Anchor, Box, Text, Title } from "@mantine/core";
 import { DemoContent } from "./DemoShell";
 import { ProgressDetails } from "./ProgressBadge";
 
@@ -7,7 +7,7 @@ export const Home = () => {
     <Box p="xl">
       <DemoContent>
         <Title>Mantine Salt</Title>
-        <Text italic color="dimmed" size="xs" mt="-lg" mb="lg">
+        <Text td="italic" c="dimmed" size="xs" mt="-lg" mb="lg">
           niche components built with mantine
         </Text>
 
@@ -22,10 +22,17 @@ export const Home = () => {
               projects. (they are slightly different there)
             </em>
           </Text>
-        </Alert>
 
-        <Text>Badges denote the stage of these components:</Text>
-        <ProgressDetails />
+          <Text c="yellow" my="lg">
+            There were a couple more components than this when I wrote it for Mantine v6. You can still reference it{" "}
+            <Anchor href="https://github.com/wenchonglee/mantine-salt/tree/93ac377ea941947c8bbee13851d8496393d80dcf">
+              at this commit.
+            </Anchor>
+            <br />
+            The remaining components here were migrated to Mantine v7 as a test bed of how much effort I will need for
+            migrating other projects
+          </Text>
+        </Alert>
       </DemoContent>
     </Box>
   );

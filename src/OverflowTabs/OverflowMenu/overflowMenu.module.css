@@ -1,0 +1,18 @@
+.menuButton {
+  border-bottom: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  font-size: var(--mantine-font-size-sm);
+  padding-left: var(--mantine-spacing-md);
+  padding-right: calc(var(--mantine-spacing-md) / 2);
+}
+
+.selected {
+  border-bottom: 2px solid var(--mantine-primary-color-filled);
+}
+
+.active {
+  background-color: var(--mantine-primary-color-light);
+}

@@ -1,9 +1,10 @@
-import { Box, Menu, TabProps, UnstyledButton } from "@mantine/core";
-import { IconChevronDown } from "@tabler/icons";
+import { Box, Menu, TabsTabProps, UnstyledButton } from "@mantine/core";
+import { IconChevronDown } from "@tabler/icons-react";
 import { RefObject } from "react";
-import { useStyles } from "./OverflowMenu.styles";
+import * as classes from "./overflowMenu.module.css";
+import clsx from "clsx";
 
-type OverflowTab = Omit<TabProps, "children"> & { label: string };
+type OverflowTab = Omit<TabsTabProps, "children"> & { label: string };
 
 export type OverflowMenuProps = {
   overflownTabs: OverflowTab[];
@@ -18,14 +19,15 @@ export const OverflowMenu = (props: OverflowMenuProps) => {
   const isOverflownTabSelected = overflownTabs.some((tab) => tab.value === selectedTab);
   const overflownTab = overflownTabs.find((tab) => tab.value === selectedTab);
 
-  const { classes } = useStyles({
-    isOverflownTabSelected,
-  });
-
   return (
     <Menu withinPortal trigger="hover" position="bottom-end">
       <Menu.Target>
-        <UnstyledButton className={classes.menuButton} ref={overflowMenuRef}>
+        <UnstyledButton
+          className={clsx(classes.menuButton, {
+            [classes.selected]: isOverflownTabSelected,
+          })}
+          ref={overflowMenuRef}
+        >
           <Box>{overflownTab ? overflownTab.label : `+ ${overflownTabs.length}`}</Box>
           &nbsp;
           <IconChevronDown size={16} />
@@ -36,13 +38,10 @@ export const OverflowMenu = (props: OverflowMenuProps) => {
         {overflownTabs.map((tab, index) => (
           <Menu.Item
             key={index}
-            sx={(theme) => ({
-              backgroundColor:
-                selectedTab === tab.value
-                  ? theme.fn.variant({ variant: "light", color: theme.primaryColor }).background
-                  : undefined,
+            className={clsx({
+              [classes.active]: selectedTab === tab.value,
             })}
-            icon={tab.icon}
+            leftSection={tab.leftSection}
             onClick={() => setSelectedTab(tab.value)}
           >
             {tab.label}

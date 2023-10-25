@@ -1,38 +1,10 @@
-import { Box, createStyles, DefaultProps, Group, Image, Selectors } from "@mantine/core";
+import { Box, Group, Image } from "@mantine/core";
 import { debounce } from "lodash";
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { ModalCarousel } from "./ModalCarousel";
+import * as classes from "./overflowimages.module.css";
 
-const useStyles = createStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    minWidth: 0,
-  },
-  imageList: {
-    overflow: "hidden",
-  },
-  imageContainer: {
-    position: "relative",
-    transition: "filter 250ms ease",
-    "&:hover": {
-      cursor: "pointer",
-      filter: "brightness(80%)",
-    },
-  },
-  imageOverlay: {
-    fontSize: theme.fontSizes.xl,
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    zIndex: 1,
-    color: theme.white,
-  },
-}));
-
-type OverflowImagesStylesNames = Selectors<typeof useStyles>;
-
-interface OverflowImagesProps extends DefaultProps<OverflowImagesStylesNames> {
+interface OverflowImagesProps {
   imageSrc: string[];
   imageWidth?: number;
   debounceWait?: number;
@@ -45,22 +17,7 @@ const IMAGE_WIDTH = 200;
 const DEBOUNCE_WAIT = 50;
 
 export const OverflowImages = (props: OverflowImagesProps) => {
-  const {
-    className,
-    classNames,
-    styles,
-    unstyled,
-    imageSrc,
-    imageWidth = IMAGE_WIDTH,
-    debounceWait = DEBOUNCE_WAIT,
-  } = props;
-
-  const { classes, cx, theme } = useStyles(undefined, {
-    name: "OverflowImages",
-    classNames,
-    styles,
-    unstyled,
-  });
+  const { imageSrc, imageWidth = IMAGE_WIDTH, debounceWait = DEBOUNCE_WAIT } = props;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSrc, setSelectedSrc] = useState<string>();
@@ -110,7 +67,7 @@ export const OverflowImages = (props: OverflowImagesProps) => {
 
         for (let i = 0; i < imageSrc.length; i++) {
           // also account for the gap size of Group (theme.spacing.md)
-          availableWidth -= imageWidth + theme.spacing.md;
+          availableWidth -= imageWidth + 16;
           if (availableWidth <= 0) {
             setOverflownIndex(i);
             return;
@@ -130,8 +87,8 @@ export const OverflowImages = (props: OverflowImagesProps) => {
 
   return (
     <>
-      <Box className={cx(classes.root, className)}>
-        <Group ref={ref} className={classes.imageList} noWrap>
+      <Box>
+        <Group ref={ref} className={classes.imageList} wrap="nowrap">
           {imageSrc.map((src, index) => (
             <Box key={index} className={classes.imageContainer} onClick={() => onChangeImage(src)}>
               {overflownIndex !== Infinity && index === overflownIndex - 1 && (
@@ -142,13 +99,12 @@ export const OverflowImages = (props: OverflowImagesProps) => {
                 fit="cover"
                 radius="md"
                 src={src}
-                width={imageWidth}
+                w={imageWidth}
+                h={imageWidth}
                 style={{
                   visibility: index >= overflownIndex ? "hidden" : "visible",
                   filter: overflownIndex !== Infinity && index === overflownIndex - 1 ? "brightness(20%)" : undefined,
-                }}
-                styles={{
-                  image: { aspectRatio: "1" },
+                  aspectRatio: 1,
                 }}
               />
             </Box>

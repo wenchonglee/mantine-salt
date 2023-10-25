@@ -1,4 +1,4 @@
-import { Box, Card, CSSObject, Group, Text, Title } from "@mantine/core";
+import { Box, Card, MantineStyleProp, Group, Text, Title } from "@mantine/core";
 import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
 import { ProgressHoverCard } from "../core/ProgressBadge";
 import { OverflowImages } from "./OverflowImages";
@@ -13,7 +13,7 @@ const sources = [
   "https://images.unsplash.com/photo-1668259678563-95f9a18e2323?w=687&q=80",
 ];
 
-const cardStyles: CSSObject = {
+const cardStyles: MantineStyleProp = {
   width: "600px",
   resize: "horizontal",
 };
@@ -26,7 +26,7 @@ export const OverflowImagesDemo = () => {
           <ProgressHoverCard stage="2" />
         </Box>
 
-        <Group position="apart" align="flex-end">
+        <Group justify="apart" align="flex-end">
           <Title>Overflow Images</Title>
 
           <Source
@@ -45,7 +45,7 @@ export const OverflowImagesDemo = () => {
 
       <DemoContent>
         <DemoShell header="Default" snippet={snippetA}>
-          <Card w="100%" withBorder sx={cardStyles}>
+          <Card w="100%" withBorder style={cardStyles}>
             <OverflowImages imageSrc={sources} />
           </Card>
         </DemoShell>
@@ -64,7 +64,7 @@ export const OverflowImagesDemo = () => {
           description="The size and debounce wait time can also be customized"
           snippet={snippetC}
         >
-          <Card w="100%" withBorder sx={cardStyles}>
+          <Card w="100%" withBorder style={cardStyles}>
             <OverflowImages imageSrc={sources} imageWidth={100} debounceWait={0} />
           </Card>
         </DemoShell>
@@ -74,7 +74,7 @@ export const OverflowImagesDemo = () => {
           description="When the parent element is a flex or grid, you will need to add min-width: 0"
           snippet={snippetD}
         >
-          <Card w="100%" withBorder sx={cardStyles}>
+          <Card w="100%" withBorder style={cardStyles}>
             <Text italic size="xs">
               without <code>min-width: 0</code>, doesn't work correctly
             </Text>
@@ -117,18 +117,18 @@ const snippetC = `
 <OverflowImages imageSrc={sources} imageWidth={100} debounceWait={0} />
 `;
 
-const snippetD = `
-<Flex>
-  <Box>
-    <OverflowImages imageSrc={sources} />
-  </Box>
-</Flex>
+// const snippetD = `
+// <Flex>
+//   <Box>
+//     <OverflowImages imageSrc={sources} />
+//   </Box>
+// </Flex>
 
-<Divider my="md" mx="-md" />
+// <Divider my="md" mx="-md" />
 
-<Flex>
-  <Box miw={0}>
-    <OverflowImages imageSrc={sources} />
-  </Box>
-</Flex>
-`;
+// <Flex>
+//   <Box miw={0}>
+//     <OverflowImages imageSrc={sources} />
+//   </Box>
+// </Flex>
+// `;

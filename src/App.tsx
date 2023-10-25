@@ -1,19 +1,5 @@
-import {
-  ActionIcon,
-  Alert,
-  AppShell,
-  Burger,
-  ColorScheme,
-  ColorSchemeProvider,
-  Group,
-  Header,
-  MantineProvider,
-  MediaQuery,
-  Title,
-  UnstyledButton,
-} from "@mantine/core";
-import { useLocalStorage } from "@mantine/hooks";
-import { IconBrandGithub, IconSalt } from "@tabler/icons";
+import { ActionIcon, Alert, AppShell, Burger, Group, MantineProvider, Title, UnstyledButton } from "@mantine/core";
+import { IconBrandGithub, IconSalt } from "@tabler/icons-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link, Outlet, ReactLocation, Route, Router } from "react-location";
@@ -22,8 +8,8 @@ import { Navbar } from "./core/Navbar";
 import { OverflowBoxDemo } from "./OverflowBox/OverflowBoxDemo";
 import { OverflowImagesDemo } from "./OverflowImages";
 import { OverflowTabsDemo } from "./OverflowTabs";
-import { ScrollableTabsDemo } from "./ScrollableTabs/ScrollableTabsDemo";
-import { TruncatedTextDemo } from "./TruncatedText/TruncatedTextDemo";
+// import { ScrollableTabsDemo } from "./ScrollableTabs/ScrollableTabsDemo";
+// import { TruncatedTextDemo } from "./TruncatedText/TruncatedTextDemo";
 import { VirtuosoInfiniteQueryDemo } from "./VirtuosoInfiniteQuery/VirtuosoInfiniteQueryDemo";
 
 const location = new ReactLocation();
@@ -32,8 +18,8 @@ const queryClient = new QueryClient();
 const routes: Route[] = [
   { path: Routes.Home, element: <Home /> },
   { path: Routes.OverflowBox, element: <OverflowBoxDemo /> },
-  { path: Routes.TruncatedText, element: <TruncatedTextDemo /> },
-  { path: Routes.ScrollableTabs, element: <ScrollableTabsDemo /> },
+  // { path: Routes.TruncatedText, element: <TruncatedTextDemo /> },
+  // { path: Routes.ScrollableTabs, element: <ScrollableTabsDemo /> },
   { path: Routes.OverflowTabs2, element: <OverflowTabsDemo /> },
   { path: Routes.OverflowImages, element: <OverflowImagesDemo /> },
   { path: Routes.VirtuosoInfiniteQuery, element: <VirtuosoInfiniteQueryDemo /> },
@@ -48,81 +34,67 @@ const routes: Route[] = [
 ];
 
 function App() {
-  const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
-    key: "color-scheme",
-    defaultValue: "dark",
-    getInitialValueInEffect: true,
-  });
-
-  const toggleColorScheme = (value?: ColorScheme) =>
-    setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
-
   const [opened, setOpened] = useState(false);
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-        <MantineProvider
-          withCSSVariables
-          withGlobalStyles
-          withNormalizeCSS
-          theme={{
-            colorScheme,
-          }}
-        >
-          <Router routes={routes} location={location}>
-            <AppShell
-              padding={0}
-              navbarOffsetBreakpoint="sm"
-              asideOffsetBreakpoint="sm"
-              navbar={<Navbar opened={opened} setOpened={setOpened} />}
-              header={
-                <Header height={50} p="md">
-                  <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
-                    <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-                      <Burger
-                        opened={opened}
-                        onClick={() => setOpened((o) => !o)}
-                        size="sm"
-                        // color={theme.colors.gray[6]}
-                        mr="xl"
-                      />
-                    </MediaQuery>
+      <MantineProvider defaultColorScheme="dark">
+        <Router routes={routes} location={location}>
+          <AppShell
+            header={{
+              height: 50,
+            }}
+            navbar={{ width: 250, breakpoint: "sm", collapsed: { mobile: !opened } }}
+          >
+            <AppShell.Header p="md">
+              <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
+                <Burger
+                  hiddenFrom="sm"
+                  opened={opened}
+                  onClick={() => setOpened((o) => !o)}
+                  size="sm"
+                  // color={theme.colors.gray[6]}
+                  mr="xl"
+                />
 
-                    <Group position="apart" w="100%" noWrap>
-                      <UnstyledButton component={Link} to={Routes.Home}>
-                        <Group>
-                          <IconSalt />
-                          <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
-                            <Title size="h4">Mantine Salt</Title>
-                          </MediaQuery>
-                        </Group>
-                      </UnstyledButton>
-
-                      <Group noWrap spacing="xs">
-                        <ActionIcon
-                          component="a"
-                          href="https://github.com/wenchonglee/mantine-salt"
-                          target="_blank"
-                          color="dark"
-                          radius="xl"
-                          size="xl"
-                          variant="transparent"
-                        >
-                          <IconBrandGithub />
-                        </ActionIcon>
-                        <SegmentedToggle />
-                      </Group>
+                <Group justify="space-between" w="100%" wrap="nowrap">
+                  <UnstyledButton component={Link} to={Routes.Home}>
+                    <Group>
+                      <IconSalt />
+                      <Title size="h4" visibleFrom="sm">
+                        Mantine Salt
+                      </Title>
                     </Group>
-                  </div>
-                </Header>
-              }
-            >
+                  </UnstyledButton>
+
+                  <Group wrap="nowrap" gap="xs">
+                    <ActionIcon
+                      component="a"
+                      href="https://github.com/wenchonglee/mantine-salt"
+                      target="_blank"
+                      color="dark"
+                      radius="xl"
+                      size="xl"
+                      variant="transparent"
+                    >
+                      <IconBrandGithub />
+                    </ActionIcon>
+                    <SegmentedToggle />
+                  </Group>
+                </Group>
+              </div>
+            </AppShell.Header>
+
+            <AppShell.Navbar p="md">
+              <Navbar opened={opened} setOpened={setOpened} />
+            </AppShell.Navbar>
+
+            <AppShell.Main>
               <Outlet />
-            </AppShell>
-          </Router>
-        </MantineProvider>
-      </ColorSchemeProvider>
+            </AppShell.Main>
+          </AppShell>
+        </Router>
+      </MantineProvider>
     </QueryClientProvider>
   );
 }

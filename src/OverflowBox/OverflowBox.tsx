@@ -1,35 +1,13 @@
-import { Box, Button, ButtonProps, createStyles, DefaultProps, Flex, Selectors } from "@mantine/core";
+import { Box, Button, ButtonProps, Flex } from "@mantine/core";
 import { useDebouncedState } from "@mantine/hooks";
-import { IconChevronDown, IconChevronUp } from "@tabler/icons";
+import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { ReactNode, useLayoutEffect, useMemo, useRef, useState } from "react";
-
-type OverflowBoxStyleProps = {
-  overflowState: {
-    canOverflow: boolean;
-    actualHeight: number;
-  };
-  isShowMore: boolean;
-  defaultMaxHeight: number;
-};
-
-const useStyles = createStyles((_theme, { overflowState, isShowMore, defaultMaxHeight }: OverflowBoxStyleProps) => ({
-  root: {},
-  innerBox: {
-    mask:
-      isShowMore || !overflowState.canOverflow
-        ? "unset"
-        : "linear-gradient(to bottom, rgba(0,0,0,1) calc(100% - 40px), rgba(0,0,0,0))",
-    maxHeight: isShowMore ? overflowState.actualHeight : defaultMaxHeight,
-    transition: "max-height 250ms ease",
-    overflow: "hidden",
-  },
-}));
-
-type OverflowBoxStylesNames = Selectors<typeof useStyles>;
+import * as classes from "./overflowBox.module.css";
+import clsx from "clsx";
 
 const DEBOUNCE_WAIT = 50;
 
-interface OverflowBoxProps extends DefaultProps<OverflowBoxStylesNames, OverflowBoxStyleProps> {
+interface OverflowBoxProps {
   children: ReactNode;
   defaultMaxHeight: number;
   hasResizeObserver?: boolean;
@@ -40,10 +18,6 @@ interface OverflowBoxProps extends DefaultProps<OverflowBoxStylesNames, Overflow
 
 export const OverflowBox = (props: OverflowBoxProps) => {
   const {
-    className,
-    classNames,
-    styles,
-    unstyled,
     defaultMaxHeight,
     children,
     hasResizeObserver = true,
@@ -63,16 +37,6 @@ export const OverflowBox = (props: OverflowBoxProps) => {
     },
     debounceWait,
     { leading: true }
-  );
-
-  const { classes, cx } = useStyles(
-    { overflowState, isShowMore, defaultMaxHeight },
-    {
-      name: "OverflowBox",
-      classNames,
-      styles,
-      unstyled,
-    }
   );
 
   const observer = useMemo(() => {
@@ -137,7 +101,7 @@ export const OverflowBox = (props: OverflowBoxProps) => {
       return (
         <Flex justify="center">
           <Button
-            rightIcon={isShowMore ? <IconChevronUp size={16} /> : <IconChevronDown size={16} />}
+            rightSection={isShowMore ? <IconChevronUp size={16} /> : <IconChevronDown size={16} />}
             onClick={toggle}
             size="xs"
             variant="subtle"
@@ -153,8 +117,14 @@ export const OverflowBox = (props: OverflowBoxProps) => {
   };
 
   return (
-    <Box className={cx(classes.root, className)} {...others}>
-      <Box ref={ref} className={classes.innerBox}>
+    <Box {...others}>
+      <Box
+        ref={ref}
+        className={clsx(classes.innerBox, {
+          [classes.mask]: isShowMore || !overflowState.canOverflow,
+        })}
+        style={{ maxHeight: isShowMore ? overflowState.actualHeight : defaultMaxHeight }}
+      >
         {children}
       </Box>
 

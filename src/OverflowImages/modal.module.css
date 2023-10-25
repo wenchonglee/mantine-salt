@@ -1,0 +1,21 @@
+.carouselControl[data-inactive] {
+  opacity: 0;
+  cursor: default;
+}
+
+.closeButton {
+  position: absolute;
+  right: var(--mantine-spacing-sm);
+  top: var(--mantine-spacing-sm);
+  z-index: 200;
+}
+
+.image {
+  aspect-ratio: 1;
+  transition: filter 250ms ease;
+}
+
+.image:hover {
+  cursor: pointer;
+  filter: brightness(80%);
+}

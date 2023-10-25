@@ -25,13 +25,12 @@ const mockApiCall = async (cursor: number) => {
 };
 
 export const useMockInfiniteQuery = () =>
-  useInfiniteQuery(
-    ["demo"],
-    async ({ pageParam = 0 }) => {
+  useInfiniteQuery({
+    queryKey: ["demo"],
+    initialPageParam: 0,
+    queryFn: async ({ pageParam }) => {
       const res = await mockApiCall(pageParam);
       return res;
     },
-    {
-      getNextPageParam: (lastPage) => lastPage.nextId ?? undefined,
-    }
-  );
+    getNextPageParam: (lastPage) => lastPage.nextId ?? undefined,
+  });

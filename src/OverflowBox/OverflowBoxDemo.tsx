@@ -1,10 +1,10 @@
-import { ActionIcon, Anchor, Box, Card, CSSObject, Group, Image, Text, Title } from "@mantine/core";
-import { IconArrowBigDownLine, IconArrowBigUpLine } from "@tabler/icons";
+import { ActionIcon, Anchor, Box, Card, Group, Image, MantineStyleProp, Text, Title } from "@mantine/core";
+import { IconArrowBigDownLine, IconArrowBigUpLine } from "@tabler/icons-react";
 import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
 import { ProgressHoverCard } from "../core/ProgressBadge";
 import { OverflowBox } from "./OverflowBox";
 
-const cardStyles: CSSObject = {
+const cardStyles: MantineStyleProp = {
   width: "320px",
   resize: "horizontal",
 };
@@ -17,12 +17,12 @@ export const OverflowBoxDemo = () => {
           <ProgressHoverCard stage="2" />
         </Box>
 
-        <Group position="apart" align="flex-end">
+        <Group justify="apart" align="flex-end">
           <Title>Overflow Box</Title>
 
           <Source
-            componentLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/OverflowBox/OverflowBox.tsx"
-            demoLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/OverflowBox/OverflowBoxDemo.tsx"
+            componentLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/OverflowBox/OverflowBox.tstyle"
+            demoLink="https://github.com/wenchonglee/mantine-salt/blob/main/src/OverflowBox/OverflowBoxDemo.tstyle"
           />
         </Group>
 
@@ -53,7 +53,7 @@ export const OverflowBoxDemo = () => {
       <DemoContent>
         <Title order={2}>Usage</Title>
         <DemoShell header="Default" snippet={snippetA} description="Responsive when resized">
-          <Card withBorder sx={cardStyles}>
+          <Card withBorder style={cardStyles}>
             <OverflowBox defaultMaxHeight={100}>
               <Text>
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
@@ -65,7 +65,7 @@ export const OverflowBoxDemo = () => {
         </DemoShell>
 
         <DemoShell header="No resize observer" snippet={snippetB}>
-          <Card withBorder sx={cardStyles}>
+          <Card withBorder style={cardStyles}>
             <OverflowBox hasResizeObserver={false} defaultMaxHeight={100}>
               <Text>
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
@@ -77,7 +77,7 @@ export const OverflowBoxDemo = () => {
         </DemoShell>
 
         <DemoShell header="Kitchen sink" snippet={snippetC}>
-          <Card withBorder sx={cardStyles}>
+          <Card withBorder style={cardStyles}>
             <OverflowBox
               defaultMaxHeight={100}
               debounceWait={0}
@@ -93,9 +93,9 @@ export const OverflowBoxDemo = () => {
                   src="https://avatars.githubusercontent.com/u/18256786?v=4"
                   ml="md"
                   radius="md"
-                  width={50}
-                  height={50}
-                  sx={{ float: "right" }}
+                  w={50}
+                  h={50}
+                  style={{ float: "right" }}
                 />
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
                 industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
@@ -143,7 +143,7 @@ const snippetC = `
       radius="md"
       width={100}
       height={100}
-      sx={{ float: "right" }}
+      style={{ float: "right" }}
     />
     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
     industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and

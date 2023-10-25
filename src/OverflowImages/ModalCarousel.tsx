@@ -1,33 +1,9 @@
 import { Carousel } from "@mantine/carousel";
-import { ActionIcon, Box, createStyles, getDefaultZIndex, Image, ImageProps, Modal, Stack } from "@mantine/core";
+import { ActionIcon, Box, Image, ImageProps, Modal, Stack } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { IconX } from "@tabler/icons";
+import { IconX } from "@tabler/icons-react";
 import { LightboxImage } from "./LightboxImage";
-
-const useCarouselStyles = createStyles((theme) => ({
-  carouselControl: {
-    "&[data-inactive]": {
-      opacity: 0,
-      cursor: "default",
-    },
-  },
-  closeButton: {
-    position: "absolute",
-    right: theme.spacing.sm,
-    top: theme.spacing.sm,
-    zIndex: getDefaultZIndex("modal"),
-  },
-  image: {
-    aspectRatio: "1",
-  },
-  imageFigure: {
-    transition: "filter 250ms ease",
-    "&:hover": {
-      cursor: "pointer",
-      filter: "brightness(80%)",
-    },
-  },
-}));
+import * as classes from "./modal.module.css";
 
 type ModalCarouselProps = {
   isModalOpen: boolean;
@@ -35,20 +11,21 @@ type ModalCarouselProps = {
   imageSrc: string[];
   selectedSrc: string | undefined;
   onChangeImage(src: string): void;
-  imageWidth: ImageProps["width"];
+  imageWidth: ImageProps["w"];
 };
 
 export const ModalCarousel = (props: ModalCarouselProps) => {
   const { isModalOpen, setIsModalOpen, imageSrc, selectedSrc, onChangeImage, imageWidth } = props;
   const isSmallViewport = useMediaQuery("(max-width: 800px)");
-  const { classes } = useCarouselStyles();
 
   return (
     <Modal
       fullScreen={isSmallViewport}
       opened={isModalOpen}
       onClose={() => setIsModalOpen(false)}
-      overlayBlur={1}
+      overlayProps={{
+        blur: 1,
+      }}
       size="75%"
       trapFocus={false}
       withCloseButton={false}
@@ -57,7 +34,7 @@ export const ModalCarousel = (props: ModalCarouselProps) => {
         <IconX />
       </ActionIcon>
 
-      <Stack p={0} sx={{ overflow: "hidden" }}>
+      <Stack p={0} style={{ overflow: "hidden" }}>
         <Box pos="relative">
           <LightboxImage key={selectedSrc} src={selectedSrc} carouselImageWidth={imageWidth} />
         </Box>
@@ -70,19 +47,11 @@ export const ModalCarousel = (props: ModalCarouselProps) => {
             dragFree={isSmallViewport}
             slideGap="xs"
             slidesToScroll={"auto"}
+            slideSize={200}
           >
             {imageSrc.map((src, index) => (
-              <Carousel.Slide size={imageWidth} key={index}>
-                <Image
-                  classNames={{
-                    image: classes.image,
-                    figure: classes.imageFigure,
-                  }}
-                  fit="cover"
-                  radius="md"
-                  src={src}
-                  onClick={() => onChangeImage(src)}
-                />
+              <Carousel.Slide key={index} w={imageWidth}>
+                <Image className={classes.image} fit="cover" radius="md" src={src} onClick={() => onChangeImage(src)} />
               </Carousel.Slide>
             ))}
           </Carousel>

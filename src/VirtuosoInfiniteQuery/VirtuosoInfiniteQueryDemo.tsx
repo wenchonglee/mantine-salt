@@ -11,7 +11,7 @@ export const VirtuosoInfiniteQueryDemo = () => {
           <ProgressHoverCard stage="1" />
         </Box>
 
-        <Group position="apart" align="flex-end">
+        <Group justify="apart" align="flex-end">
           <Title>React Virtuoso + React Query </Title>
 
           <Source

@@ -57,20 +57,20 @@ export const ProgressDetails = () => {
     <>
       <Timeline active={4} color="gray">
         <Timeline.Item title={<ProgressBadge stage="0" />}>
-          <Text color="dimmed" size="sm">
+          <Text c="dimmed" size="sm">
             We've identified that we might need this, but the scope is undefined, or the timeline is further away.
           </Text>
         </Timeline.Item>
 
         <Timeline.Item title={<ProgressBadge stage="1" />}>
-          <Text color="dimmed" size="sm">
+          <Text c="dimmed" size="sm">
             This component is being worked on, but being a proof of concept, this component will undergo multiple
             changes at this stage.
           </Text>
         </Timeline.Item>
 
         <Timeline.Item title={<ProgressBadge stage="2" />}>
-          <Text color="dimmed" size="sm">
+          <Text c="dimmed" size="sm">
             This component has reached its functional goals, and is unlikely to change on this aspect.
             <br />
             The styles of this component may still change at this point.
@@ -78,7 +78,7 @@ export const ProgressDetails = () => {
         </Timeline.Item>
 
         <Timeline.Item title={<ProgressBadge stage="3" />}>
-          <Text color="dimmed" size="sm">
+          <Text c="dimmed" size="sm">
             The styles of this component has also been cleared, and the component is unlikely to change from this point.
           </Text>
         </Timeline.Item>
@@ -88,7 +88,7 @@ export const ProgressDetails = () => {
 
       <Timeline>
         <Timeline.Item title={<ProgressBadge stage="abandoned" />}>
-          <Text color="dimmed" size="sm">
+          <Text c="dimmed" size="sm">
             This idea didn't work out, but is kept around for reference.
           </Text>
         </Timeline.Item>

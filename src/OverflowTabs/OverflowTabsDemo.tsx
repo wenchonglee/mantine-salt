@@ -1,11 +1,11 @@
-import { Anchor, Box, Button, Card, Code, CSSObject, Group, HoverCard, List, Text, Title } from "@mantine/core";
-import { IconBrandAmongus } from "@tabler/icons";
+import { Anchor, Box, Button, Card, Code, MantineStyleProp, Group, HoverCard, List, Text, Title } from "@mantine/core";
+import { IconBrandAmongUs } from "@tabler/icons-react";
 import { useState } from "react";
 import { DemoContent, DemoHeader, DemoShell, Source } from "../core";
 import { ProgressHoverCard } from "../core/ProgressBadge";
 import { OverflowTabs } from "./OverflowTabs";
 
-const cardStyles: CSSObject = {
+const cardStyles: MantineStyleProp = {
   width: "600px",
   resize: "horizontal",
 };
@@ -22,7 +22,7 @@ export const OverflowTabsDemo = () => {
           <ProgressHoverCard stage="2" />
         </Box>
 
-        <Group position="apart" align="flex-end">
+        <Group justify="apart" align="flex-end">
           <Title>Overflow Tabs</Title>
 
           <Source
@@ -52,14 +52,14 @@ export const OverflowTabsDemo = () => {
         </Text>
 
         <DemoShell header="Default" snippet={snippetA}>
-          <Card withBorder sx={cardStyles}>
+          <Card withBorder style={cardStyles}>
             <OverflowTabs
               value={value}
-              onTabChange={setValue}
+              onChange={setValue}
               tabs={dummyArray.map((_, index) => ({
                 value: `${index}`,
                 label: `Tab ${index === 7 ? "longer text-longer text-longer text" : index}`,
-                icon: !(index % 8) ? <IconBrandAmongus /> : undefined,
+                icon: !(index % 8) ? <IconBrandAmongUs /> : undefined,
               }))}
             />
           </Card>
@@ -80,10 +80,10 @@ export const OverflowTabsDemo = () => {
           snippet={snippetC}
           description={`You can pass in overflow props to customize how the overflow button looks and behaves. \nThe default debounce time can also be overridden.`}
         >
-          <Card withBorder sx={cardStyles}>
+          <Card withBorder style={cardStyles}>
             <OverflowTabs
               value={value}
-              onTabChange={setValue}
+              onChange={setValue}
               tabs={dummyArray.map((_, index) => ({
                 value: `${index}`,
                 label: `Tab ${index}`,
@@ -93,7 +93,7 @@ export const OverflowTabsDemo = () => {
               overflowComponent={({ overflownTabs, selectedTab, setSelectedTab, overflowMenuRef }) => (
                 <HoverCard withinPortal>
                   <HoverCard.Target>
-                    <Button compact variant="subtle" ref={overflowMenuRef}>
+                    <Button size="compact-sm" variant="subtle" ref={overflowMenuRef}>
                       Show More
                     </Button>
                   </HoverCard.Target>

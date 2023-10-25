@@ -1,6 +1,6 @@
-import { Box, Button, Card, Center, Divider, Stack, Text, useMantineTheme } from "@mantine/core";
-import { Prism } from "@mantine/prism";
-import { IconBrandGithub } from "@tabler/icons";
+import { CodeHighlight } from "@mantine/code-highlight";
+import { Box, Button, Card, Center, Divider, Stack, Text, useMantineColorScheme } from "@mantine/core";
+import { IconBrandGithub } from "@tabler/icons-react";
 import { ReactNode } from "react";
 
 type DemoShellProps = {
@@ -11,14 +11,14 @@ type DemoShellProps = {
 };
 
 const DemoShell = ({ children, description, header, snippet }: DemoShellProps) => {
-  const theme = useMantineTheme();
+  const { colorScheme } = useMantineColorScheme();
 
   return (
     <Card w="100%" withBorder>
-      <Card.Section bg={theme.colorScheme === "dark" ? "dark.8" : "gray.0"} p="md">
+      <Card.Section bg={colorScheme === "dark" ? "dark.8" : "gray.0"} p="md">
         <Text fw={700}>{header}</Text>
         {description && (
-          <Text color="dimmed" size="sm" sx={{ whiteSpace: "pre-wrap" }}>
+          <Text c="dimmed" size="sm" style={{ whiteSpace: "pre-wrap" }}>
             {description}
           </Text>
         )}
@@ -32,7 +32,7 @@ const DemoShell = ({ children, description, header, snippet }: DemoShellProps) =
 
       {snippet && (
         <Card.Section mt="md">
-          <Prism language="tsx">{snippet}</Prism>
+          <CodeHighlight code={snippet} language="tsx" copyLabel="Copy button code" copiedLabel="Copied!" />
         </Card.Section>
       )}
     </Card>
@@ -48,8 +48,8 @@ const Source = ({ componentLink, demoLink }: SourceProps) => {
   return (
     <Button.Group>
       <Button
-        compact
-        leftIcon={<IconBrandGithub size={16} />}
+        size="compact-sm"
+        leftSection={<IconBrandGithub size={16} />}
         variant="gradient"
         component="a"
         href={componentLink}
@@ -58,8 +58,8 @@ const Source = ({ componentLink, demoLink }: SourceProps) => {
         Component source
       </Button>
       <Button
-        compact
-        leftIcon={<IconBrandGithub size={16} />}
+        size="compact-sm"
+        leftSection={<IconBrandGithub size={16} />}
         fullWidth={false}
         variant="default"
         component="a"
@@ -73,10 +73,10 @@ const Source = ({ componentLink, demoLink }: SourceProps) => {
 };
 
 const DemoHeader = ({ children }: { children: ReactNode }) => {
-  const theme = useMantineTheme();
+  const { colorScheme } = useMantineColorScheme();
 
   return (
-    <Box bg={theme.colorScheme === "dark" ? "dark.8" : "gray.1"} p="xl" mb="xl">
+    <Box bg={colorScheme === "dark" ? "dark.8" : "gray.1"} p="xl" mb="xl">
       <Stack maw="1200px" mx="auto">
         {children}
       </Stack>
@@ -86,17 +86,7 @@ const DemoHeader = ({ children }: { children: ReactNode }) => {
 
 const DemoContent = ({ children }: { children: ReactNode }) => {
   return (
-    <Stack
-      maw="1200px"
-      mx={"auto"}
-      mb="xl"
-      sx={(theme) => ({
-        [theme.fn.smallerThan(1550)]: {
-          marginRight: theme.spacing.xl,
-          marginLeft: theme.spacing.xl,
-        },
-      })}
-    >
+    <Stack maw="1200px" mx={"auto"} mb="xl" p="md">
       {children}
     </Stack>
   );
